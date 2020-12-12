@@ -9,8 +9,6 @@ Plug 'https://github.com/ptzz/lf.vim.git'
 
 call plug#end()
 
-
-
 "Code pour le status line
 set statusline=
 set statusline+=%#Cursor#\ VIM\ \ 
@@ -713,7 +711,6 @@ endfunction
 let collage= 0
 let g:note= 0
 call CollageMap()
-nnoremap à /
 nnoremap édb :cope<CR>
 nnoremap écta :call Ctags()<CR>
 nnoremap vp :vsp .<CR>
