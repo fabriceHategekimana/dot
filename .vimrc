@@ -172,15 +172,14 @@ endfunction
 "----------------------------------C++--------------------------------
 
 function RunCpp3(type)
-	let filepath = expand('%:p')
+	let filepath = expand('%:p:h')
 	let parentname = expand('%:p:h:t')
-	let nomunique = expand('%:r')
+	let nomunique = expand('%:t:r')
 	if a:type == "normal"
-		execute "!g++ ".expand('%') " -o ".expand('%:r')." -std=c++11 -pthread"
-		terminal ./%:r
+		execute "terminal g++ ".expand('%') " -o ".expand('%:r')." -std=c++11 -pthread"
+		execute "terminal ./".nomunique
 	elseif a:type == "mpi"
 		execute "terminal mpiCC ".bufname('%')." -o ".nomunique." -std=c++11"
-		echom "terminal mpirun -np ".g:parallele." --oversubscribe ./".expand('%:t:r')
 		execute "terminal mpirun -np ".g:parallele." --oversubscribe ./".expand('%:t:r')
 	elseif a:type == "part"
 		!cat % | grep include >> RunCppPart.cpp && echo "int main(int argc, char **argv){" >> RunCppPart.cpp && sed -i '1d' RunCppPart.cpp 
