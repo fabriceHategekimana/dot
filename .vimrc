@@ -75,6 +75,7 @@ set incsearch
 "pour que vimwiki n'ait pas trop de problème
 set nocompatible
 set cindent shiftwidth=8
+set number
 filetype indent on
 syntax on
 
@@ -209,25 +210,23 @@ function CppLike()
 	iabbrev <buffer> for for(auto i: v<Right>{<CR><CR><Up>
 	iabbrev <buffer> forr for({<CR><CR><Up><Up><Left><Left>
 	iabbrev <buffer> forrr for(int i= 0; i < n; i++<Right>{<CR><CR><Right><Up>
-	iabbrev <buffer> if if(){<CR><CR><Esc>2<Up>t)a
+	iabbrev <buffer> if if(<Right>{<CR><CR><Esc>2<Up>ta
+	iabbrev <buffer> while while(<Right>{<CR><CR><Esc>2<Up>ta
 	iabbrev <buffer> else	else{<CR><CR><Up>
-	inoremap <buffer> function int<Space>(_){<CR><CR>}<Up><Up><Esc>f(i
-	iabbrev <buffer> recv MPI_Status<Space>status;<CR>MPI_Recv(&, sizeof(int), MPI_INT, i, 0, MPI_COMM_WORLD, &status);<Esc>F&a
-	iabbrev <buffer> vrecv MPI_Status<Space>status;<CR>MPI_Recv(v.data(), v.size(), MPI_INT, i, 0, MPI_COMM_WORLD, &status);<Esc>
-	iabbrev <buffer> send MPI_Send(&, sizeof(int), MPI_INT, i, 0, MPI_COMM_WORLD);<Esc>F&a
-	iabbrev <buffer> vsend MPI_Send(v.data(), v.size(), MPI_INT, i, 0, MPI_COMM_WORLD);<Esc>
-	iabbrev <buffer> barri MPI_Barrier(MPI_COMM_WORLD);<CR>double<Space>start<space>=<space>MPI_Wtime();
-	iabbrev <buffer> end end<Space>=<Space>MPI_Wtime();<CR><CR>if(myRank==0)<Space>std::cout<Space><<<Space>"temps<Space>de<Space>l'operation<Space>:<Space>"<Space><<<Space>end-start<Space><<<Space>"[s]"<Space><<<Space>std::endl;<Esc>
+	inoremap <buffer> function int<Space>({<CR><CR>}<Up><Up><Esc>f(i
+	iabbrev <buffer> recv MPI_Status<Space>status;<CR>MPI_Recv(&, sizeof(int, MPI_INT, i, 0, MPI_COMM_WORLD, &status;<Esc>F&a
+	iabbrev <buffer> vrecv MPI_Status<Space>status;<CR>MPI_Recv(v.data(, v.size(, MPI_INT, i, 0, MPI_COMM_WORLD, &status;<Esc>
+	iabbrev <buffer> send MPI_Send(&, sizeof(int, MPI_INT, i, 0, MPI_COMM_WORLD;<Esc>F&a
+	iabbrev <buffer> vsend MPI_Send(v.data(, v.size(, MPI_INT, i, 0, MPI_COMM_WORLD;<Esc>
+	iabbrev <buffer> barri MPI_Barrier(MPI_COMM_WORLD;<CR>double<Space>start<space>=<space>MPI_Wtime(;
+	iabbrev <buffer> end end<Space>=<Space>MPI_Wtime(;<CR><CR>if(myRank==0<Space>std::cout<Space><<<Space>"temps<Space>de<Space>l'operation<Space>:<Space>"<Space><<<Space>end-start<Space><<<Space>"[s]"<Space><<<Space>std::endl;<Esc>
 
 	"SNIPPETS
 	iabbrev <buffer> smain <Esc>:r<Space>~/note/snippet/cpp.cpp<CR>
 	iabbrev <buffer> smainmpi <Esc>:r<Space>~/note/snippet/cpp_mpi.cpp<CR>
 	nnoremap <buffer> <F2> :call Note()<CR>
-	"nnoremap <buffer> <F4> :call RunCpp2()<CR>
 	nnoremap <buffer> <F4> :call RunCpp3("normal")<CR>
-	"xnoremap <buffer> <F5> y:call RunCppPart()<CR>
 	xnoremap <buffer> <F5> y:call RunCpp3("part")<CR>
-	"nnoremap <buffer> <F5> :call RunCpp()<CR>
 	nnoremap <buffer> <F5> :call RunCpp3("mpi")<CR>
 	nnoremap <buffer> <F6> :let g:parallele= 
 	nnoremap <buffer> <F9> :call MkFiles("cpp")<CR>
@@ -648,6 +647,14 @@ function CopyLine(num)
 	execute a:num."t."
 endfunction
 
+function CI()
+	iabbrev <buffer> af afficher;<Left>
+	iabbrev <buffer> boucle boucle<CR>{<CR><CR><Up><Up><Up><Esc>A
+	iabbrev <buffer> inv inv;<Left>
+	iabbrev <buffer> racine racine;<Left>
+	iabbrev <buffer> aff aff_ral;<Esc>
+endfunction
+
 "commandes en command mode
 command -nargs=1 CpL :call CopyLine(<args>)<CR>
 command So :so $MYVIMRC
@@ -674,6 +681,7 @@ autocmd BufReadPre,BufNewFile *.s call ARM()
 autocmd BufReadPre,BufNewFile *.xba call Basic()
 autocmd BufReadPre,BufNewFile ~/Documents/Répertoire/note/* call Programme()
 autocmd BufReadPre,BufNewFile ~/.vimrc call Vimrc()
+autocmd BufReadPre,BufNewFile *.ci call CI()
 "autocmd VimEnter * NERDTree
 
 "Actions pour les plugins et les touches F1-F12
@@ -703,7 +711,6 @@ function CollageMap()
 	inoremap [ []<left>
 	inoremap [[ [<Esc>
 	inoremap [[[ [<Esc>A]<Esc> 
-	set number
 endfunction
 
 "Raccourci pour le code en général
@@ -723,10 +730,15 @@ nnoremap <C-K> {
 nnoremap <C-J> }
 nnoremap <C-F> /
 
+"Mouvement en mode pending operator
+onoremap in( :<c-u>normal! f(vi(
+
 inoremap <C-C> <Esc>:w<CR>
 inoremap <C-S> <Right>
 inoremap <buffer> <C-L> <Esc>/_<CR>s
 nnoremap <buffer> ég :!gedit %<CR>
+
+
 
 
 "\e	<Esc>
