@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/keith/swift.vim.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'vimwiki/vimwiki'
-Plug 'https://github.com/vim-syntastic/syntastic.git'
 Plug 'https://github.com/wikitopian/hardmode.git'
 Plug 'https://github.com/ptzz/lf.vim.git'
 
@@ -48,19 +47,6 @@ set omnifunc=syntaxcomplete#Complete
 
 
 filetype plugin on
-"let g:syntastic_c_checkers = ['gcc']
-"let g:syntastic_cpp_checkers = ['cppcheck']
-"let g:syntastic_check_on_open = 0
-"
-let g:syntastic_mode_map = {
-    \ "mode": "active",
-    \ "active_filetypes": [],
-    \ "passive_filetypes": ["java"] }
-
-"syntastic configurations
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
 "Quelque définitions claires et simples pour le code en général
 "set relativenumber
@@ -77,7 +63,7 @@ set nocompatible
 set cindent shiftwidth=8
 set number
 filetype indent on
-syntax on
+"syntax on
 
 "create quickly and easely a odp file with selected musii vimwiki
 let wiki_1 = {}
@@ -123,7 +109,7 @@ function GetProjectName()
 endfunction
 
 function Note()
-	execute "tabnew ~/note/note_".a:extention.".md"
+	execute "tabnew ~/note/note_".g:extention.".md"
 endfunction
 
 function Ctags()
@@ -285,8 +271,7 @@ endfunction
 
 function Python()
 	set nospell
-	let g:extention= "py"
-	SyntasticToggleMode
+	let g:extention="py"
 	
 	"Raccourci pour le langage python
 	nnoremap <buffer> éc ^i#<Esc><CR>
