@@ -46,8 +46,6 @@ filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 
 
-filetype plugin on
-
 "Quelque définitions claires et simples pour le code en général
 "set relativenumber
 set path+=**
