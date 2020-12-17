@@ -714,7 +714,7 @@ nnoremap <C-J> }
 nnoremap <C-F> /
 
 "Mouvement en mode pending operator
-onoremap in( :<c-u>normal! f(vi(
+onoremap in( :<c-u>normal! f(vi(<CR>
 
 inoremap <C-C> <Esc>:w<CR>
 inoremap <C-S> <Right>
