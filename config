@@ -123,10 +123,12 @@ bindsym $sup+g exec gedit
 bindsym $sup+shift+g exec gimp
 #zathura
 bindsym $sup+z exec zathura
-#zathura
+#diary
 bindsym $sup+d exec gnome-terminal -- vim "+:VimwikiMakeDiaryNote"
 #vim
 bindsym $sup+v exec gnome-terminal -- vim 
+#Sublime
+bindsym $sup+s exec sublime
 
 #gui for task
 #define the timer (pkill -x bash to stop this process)
