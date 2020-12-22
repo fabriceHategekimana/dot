@@ -14,7 +14,7 @@
 #exec_always --no-startup-id ~/.config/polybar/launch
 #music player mpg123
 exec polybar example
-exec picom
+exec picom --experimental-backends
 exec albert
 
 #fond d'écran
@@ -320,7 +320,7 @@ for_window [class="Tilda"] floating enable
 for_window [class="Galculator"] floating enable
 
 
-for_window [class="^.*"] border pixel 1
-gaps inner 20
-gaps outer 10
+for_window [class="^.*"] border pixel 3
+gaps inner 10
+gaps outer 8
 
