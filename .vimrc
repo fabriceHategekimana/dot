@@ -5,6 +5,7 @@ Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'vimwiki/vimwiki'
 Plug 'https://github.com/wikitopian/hardmode.git'
 Plug 'https://github.com/ptzz/lf.vim.git'
+Plug 'artur-shaik/vim-javacomplete2'
 
 call plug#end()
 
@@ -37,14 +38,11 @@ if !has('gui_running')
 	  set t_Co=256
 endif
 
-"Call HardMode()
-"Call EasyMode()
-
 let g:CurrentFileExplorer= 1
 
 filetype plugin on
-set omnifunc=syntaxcomplete#Complete
-
+set omnifunc=syntaxComplete#Complete
+set complete+=kspell 
 
 "Quelque définitions claires et simples pour le code en général
 "set relativenumber
@@ -666,6 +664,7 @@ autocmd BufReadPre,BufNewFile ~/Documents/Répertoire/note/* call Programme()
 autocmd BufReadPre,BufNewFile ~/.vimrc call Vimrc()
 autocmd BufReadPre,BufNewFile *.ci call CI()
 "autocmd VimEnter * NERDTree
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 "Actions pour les plugins et les touches F1-F12
 let g:vimrc_window= 0
