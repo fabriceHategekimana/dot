@@ -127,8 +127,8 @@ bindsym $sup+z exec zathura
 bindsym $sup+d exec gnome-terminal -- vim "+:VimwikiMakeDiaryNote"
 #vim
 bindsym $sup+v exec gnome-terminal -- vim 
-#Sublime
-bindsym $sup+s exec sublime
+#activite
+bindsym $sup+a exec sakura -e vim ~/projet/activite/start.md
 
 #gui for task
 #define the timer (pkill -x bash to stop this process)
