@@ -254,6 +254,11 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+bindsym $mod+v mode "vim"
+
+mode "vim" {
+        bindsym Escape mode "default"
+}
 
 mode "config" {
         # back to normal: Enter or Escape
@@ -323,4 +328,13 @@ for_window [class="Galculator"] floating enable
 for_window [class="^.*"] border pixel 3
 gaps inner 10
 gaps outer 8
+
+
+#Taille de fenêtre
+bindsym $mod+s resize shrink width 500 px or 500 ppt ; resize shrink height 500 px or 500 ppt;
+
+bindsym $mod+Ctrl+Right resize shrink width 1 px or 1 ppt
+bindsym $mod+Ctrl+Up resize grow height 1 px or 1 ppt
+bindsym $mod+Ctrl+Down resize shrink height 1 px or 1 ppt
+bindsym $mod+Ctrl+Left resize grow width 1 px or 1 ppt
 
