@@ -56,20 +56,14 @@ map O $mimeopen --ask $f
 
 # move current file or selected files to trash folder
 # (also see 'man mv' for backup/overwrite options)
-cmd trash %set -f; mv $fx ~/.trash
-
-# define a custom 'delete' command
-# cmd delete ${{
-#     set -f
-#     printf "$fx\n"
-#     printf "delete?[y/n]"
-#     read ans
-#     [ $ans = "y" ] && rm -rf $fx
-# }}
-#
  cmd delete ${{
      set -f
-     mv $fx ~/corbeille
+     mv -f $fx ~/corbeille
+ }}
+
+ cmd void ${{
+     set -f
+     rm -f ~/corbeille/*
  }}
 
  cmd myformat ${{
