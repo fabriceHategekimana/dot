@@ -283,6 +283,7 @@ mode "config" {
 	bindsym z exec gnome-terminal -- vim ~/.config/zathura/zathurarc ; mode "default"
 	bindsym s exec gnome-terminal -- vim ~/.surf/script.js ; mode "default"
 	bindsym $mod+p exec gnome-terminal -- vim ~/.config/polybar/config
+	bindsym g exec gnome-terminal -- vim ~/.config/gtk-3.0/gtk.css ; mode "default"
 
 	
 }
