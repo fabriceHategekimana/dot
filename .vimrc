@@ -1,3 +1,9 @@
+" ___  _             _           
+"|  _ \| |_   _  __ _(_)_ __  ___ 
+"| |_) | | | | |/ _` | | '_ \/ __|
+"|  __/| | |_| | (_| | | | | \__ \
+"|_|   |_|\__,_|\__, |_|_| |_|___/
+"               |___/             
 call plug#begin('~/.vim/plugged')
 
 Plug 'vimwiki/vimwiki'
@@ -7,6 +13,11 @@ Plug 'artur-shaik/vim-javacomplete2'
 
 call plug#end()
 
+" ____  _        _               _ _            
+"/ ___|| |_ __ _| |_ _   _ ___  | (_)_ __   ___ 
+"\___ \| __/ _` | __| | | / __| | | | '_ \ / _ \
+" ___) | || (_| | |_| |_| \__ \ | | | | | |  __/
+"|____/ \__\__,_|\__|\__,_|___/ |_|_|_| |_|\___|
 "Code pour le status line
 set statusline=
 set statusline+=%#Cursor#\ VIM\ \ 
@@ -14,25 +25,29 @@ set statusline+=%#Normal#%{(mode()=='n')?'\ \ NORMAL\ ':''}
 set statusline+=%#PmenuThumb#%{(mode()=='i')?'\ \ INSERT\ ':''}
 set statusline+=%#TabLineFill#%{(mode()=='r')?'\ \ REPLACE\ ':''}
 set statusline+=%#SpellRare#%{(mode()=='v')?'\ \ VISUAL\ ':''}
-set statusline+=%#LineNr#\ %n\           " buffer number
-set statusline+=%#Visual#       " colour
-set statusline+=%#CursorIM#     " colour
-set statusline+=%R                        " readonly flag
-set statusline+=%M                        " modified [+] flag
-set statusline+=%#Cursor#               " colour
+set statusline+=%#LineNr#\ %n\    " buffer number
+set statusline+=%#Visual#         " colour
+set statusline+=%#CursorIM#       " colour
+set statusline+=%R                " readonly flag
+set statusline+=%M                " modified [+] flag
+set statusline+=%#Cursor#         " colour
 set statusline+=%#CursorLine#     " colour
-set statusline+=\ %t\                   " short file name
-set statusline+=%=                          " right align
-set statusline+=%#LineNr#   " colour
-set statusline+=\ %3l:%-2c\         " line + column
-set statusline+=%#Normal#\ %Y\                   " file type
-set statusline+=%#Cursor#       " colour
-set statusline+=%3p%%\                " percentage
+set statusline+=\ %t\             " short file name
+set statusline+=%=                " right align
+set statusline+=%#LineNr#         " colour
+set statusline+=\ %3l:%-2c\       " line + column
+set statusline+=%#Normal#\ %Y\    " file type
+set statusline+=%#Cursor#         " colour
+set statusline+=%3p%%\            " percentage
 
-let g:CurrentFileExplorer= 1
+"          _   _   _                 
+" ___  ___| |_| |_(_)_ __   __ _ ___ 
+"/ __|/ _ \ __| __| | '_ \ / _` / __|
+"\__ \  __/ |_| |_| | | | | (_| \__ \
+"|___/\___|\__|\__|_|_| |_|\__, |___/
+"                          |___/     
 let mapleader="à"
 color elflord
-
 "Quelque définitions claires et simples pour le code en général
 "set relativenumber
 set laststatus=2
@@ -52,13 +67,17 @@ set matchpairs+=<:>
 set timeoutlen=500
 set virtualedit=onemore
 set noswapfile "empècher la génération de swapfile"
-"syntax on
-
+filetype plugin indent on
 "create quickly and easely a odp file with selected musii vimwiki
 let g:vimwiki_list = [{'path': '~/', 'ext':'.md', 'index':'note', 'syntax':'markdown'},
 			\{'path': '~/cours/genie_logiciel/note/', 'ext':'.md', 'index':'note', 'syntax':'markdown'},
 			\{'path': '~/cours/concurrence/note/', 'ext':'.md', 'index':'note', 'syntax':'markdown'}]
-
+" _____                 _   _                 
+"|  ___|   _ _ __   ___| |_(_) ___  _ __  ___ 
+"| |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+"|  _|| |_| | | | | (__| |_| | (_) | | | \__ \
+"|_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+                                             
 "liste de fonction
 function MkFiles(fichier)
 	execute "!cp ~/note/template/".a:fichier.".".a:fichier." ." 
@@ -81,8 +100,11 @@ function Note()
 	execute "tabnew ~/note/note_".g:extention.".md"
 endfunction
 
-function Ctags()
-	execute "!ctags *.".g:extention." *.".g:extention_supplementaire
+function CtagsFunction(...)
+    execute "!ctags **.".g:extention
+    for moreExtention in a:000
+	execute "!ctags **.".moreExtention
+    endfor
 endfunction
 
 
@@ -354,28 +376,6 @@ function Chant()
 	execute ":tabnew ../txt/".@"
 endfunction
 
-function MarkdownLigne()
-	execute ":normal! yyo"
-	let tab= split(@", "	")
-	for i in tab
-		let n= len(i)
-		let @a= "-"	
-		execute ":normal! ".n."\"apa	"
-	endfor
-endfunction
-
-function MarkdownTitre()
-	normal yy
-	let l= len(@")
-	let ligne= ""
-	let i= 0
-	while i < l
-		let ligne= ligne."="
-		let i +=1
-	endwhile
-	execute "normal o".ligne
-endfunction
-
 function Imagerie()
 	if ! filereadable("imagerie_numerique.md")
 		execute ":! cp ~/note/imagerie_numerique.md ."
@@ -453,6 +453,12 @@ function Php()
 	inoremap <buffer> post $_POST['']<Left><Left>
 endfunction 
 
+"             _            
+"  __ _ _   _| |_ _ __ ___ 
+" / _` | | | | __| '__/ _ \
+"| (_| | |_| | |_| | |  __/
+" \__,_|\__,_|\__|_|  \___|
+                          
 function NoteWindow()
 	let g:note= 0
 	nnoremap <buffer> <F2> :wq<CR>
@@ -561,20 +567,6 @@ function Programme()
 	nnoremap <buffer> éc :call Chant()<CR>
 endfunction
 
-function Vimrc()
-	iabbrev <buffer> space <Space>
-	iabbrev <buffer> cr <CR>
-	iabbrev <buffer> right <Right>
-	iabbrev <buffer> left <Left>
-	iabbrev <buffer> up <Up>
-	iabbrev <buffer> down <Down>
-	iabbrev <buffer> esc <Esc>
-endfunction
-
-function CopyLine(num)
-	execute a:num."t."
-endfunction
-
 function CI()
 	iabbrev <buffer> af afficher;<Left>
 	iabbrev <buffer> boucle boucle<CR>{<CR><CR><Up><Up><Up><Esc>A
@@ -583,14 +575,33 @@ function CI()
 	iabbrev <buffer> aff aff_ral;<Esc>
 endfunction
 
+function Vimrc()
+	let g:extention="vimrc"
+	nnoremap éc I"<Esc>
+endfunction
+
+"  ____                                          _     
+" / ___|___  _ __ ___  _ __ ___   __ _ _ __   __| |___ 
+"| |   / _ \| '_ ` _ \| '_ ` _ \ / _` | '_ \ / _` / __|
+"| |__| (_) | | | | | | | | | | | (_| | | | | (_| \__ \
+" \____\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_|___/
+                                                      
+
 "commandes en command mode
-command -nargs=1 CpL :call CopyLine(<args>)<CR>
+command -nargs=1 CpL :<args>t.<CR>
 command So :so $MYVIMRC
 command Store !firefox https://vimawesome.com/ &
 command -nargs=+ -complete=help Help :tab help <args>
 command Makefile :call MakefileFunction()<CR>
+command -nargs=* Ctags :call CtagsFunction(<f-args>)<CR>
 
-filetype plugin indent on
+
+"    _         _                                                      _     
+"   / \  _   _| |_ ___   ___ ___  _ __ ___  _ __ ___   __ _ _ __   __| |___ 
+"  / _ \| | | | __/ _ \ / __/ _ \| '_ ` _ \| '_ ` _ \ / _` | '_ \ / _` / __|
+" / ___ \ |_| | || (_) | (_| (_) | | | | | | | | | | | (_| | | | | (_| \__ \
+"/_/   \_\__,_|\__\___/ \___\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_|___/
+                                                                           
 
 "autocommande
 autocmd FileType r call RLike()
@@ -617,6 +628,12 @@ autocmd BufReadPre,BufNewFile *.ci call CI()
 "autocmd VimEnter * NERDTree
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
+"  ____ _       _           _                               _             
+" / ___| | ___ | |__   __ _| |  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _ 
+"| |  _| |/ _ \| '_ \ / _` | | | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
+"| |_| | | (_) | |_) | (_| | | | | | | | | (_| | |_) | |_) | | | | | (_| |
+" \____|_|\___/|_.__/ \__,_|_| |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
+                                              "|_|   |_|            |___/ 
 "Actions pour les plugins et les touches F1-F12
 let g:vimrc_window= 0
 nnoremap cp <Esc>:CpL<Space>
@@ -632,30 +649,30 @@ nnoremap <F10> :!gedit %<CR>
 nnoremap <F12> :!clear<CR>
 nnoremap <Space> .
 nnoremap èè :call Makefile()<CR>
-
-function CollageMap()
-	inoremap " ""<Left>
-	inoremap "" "<Esc>
-	inoremap """  "<Esc>A"<Esc>
-	inoremap ( ()<Left>
-	inoremap (( (<Esc>
-	inoremap (((  (<Esc>A)<Esc>
-	inoremap { {}<Left> 
-	inoremap {{ {<Esc> 
-	inoremap {{{ {<Esc>A}<Esc> 
-	inoremap [ []<left>
-	inoremap [[ [<Esc>
-	inoremap [[[ [<Esc>A]<Esc> 
-endfunction
+inoremap " ""<Left>
+inoremap "" "<Esc>
+inoremap """  "<Esc>A"<Esc>
+inoremap ( ()<Left>
+inoremap (( (<Esc>
+inoremap (((  (<Esc>A)<Esc>
+inoremap { {}<Left> 
+inoremap {{ {<Esc> 
+inoremap {{{ {<Esc>A}<Esc> 
+inoremap [ []<left>
+inoremap [[ [<Esc>
+inoremap [[[ [<Esc>A]<Esc> 
 
 "Raccourci pour le code en général
-let collage= 0
-let g:note= 0
-call CollageMap()
 nnoremap édb :cope<CR>
-nnoremap écta :call Ctags()<CR>
+nnoremap éct :Ctags
+nnoremap ! :!
+inoremap <C-C> <Esc>:w<CR>
+inoremap <C-S> <Right>
+inoremap <buffer>  <Esc>/_<CR>cw
+
+"Navigation avec lf
 nnoremap vp :vert term lf .<CR>
-nnoremap vs :sp .<CR>
+nnoremap vs :term lf .<CR>
 nnoremap tn :LfNewTab<CR>
 
 "Mouvements spéciaux
@@ -663,36 +680,9 @@ nnoremap <C-L> :tabn<CR>
 nnoremap <C-H> :tabp<CR>
 nnoremap <C-K> {
 nnoremap <C-J> }
-nnoremap <C-F> /
 
 "Mouvement en mode pending operator
 onoremap in( :<C-U>normal! f(vi(<CR>
 onoremap lp :normal t)vF,<CR>
 onoremap n" :<C-U>normal f"lvt"<CR>
 onoremap in) :<C-U>normal f)hvT(<CR>
-
-inoremap <C-C> <Esc>:w<CR>
-inoremap <C-S> <Right>
-inoremap <buffer> <C-L> <Esc>/_<CR>s
-nnoremap <buffer> ég :!gedit %<CR>
-
-
-
-"\e	<Esc>
-"\t	<Tab>
-"\r	<CR>
-"\b	<BS>
-"
-"
-"item	matches			equivalent ~
-"\d	digit			[0-9]
-"\D	non-digit		[^0-9]
-"\x	hex digit		[0-9a-fA-F]
-"\X	non-hex digit		[^0-9a-fA-F]
-"\s	white space		[ 	]     (<Tab> and <Space>)
-"\S	non-white characters	[^ 	]     (not <Tab> and <Space>)
-"\l	lowercase alpha		[a-z]
-"\L	non-lowercase alpha	[^a-z]
-"\u	uppercase alpha		[A-Z]
-"\U	non-uppercase alpha	[^A-Z]
-"
