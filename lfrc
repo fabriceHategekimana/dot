@@ -83,6 +83,10 @@ cmd open ${{
 	ext="${f##*.}"
 	if [ "$ext" == "pdf" ]; then
 		zathura $f &
+	elif [ "$ext" == "docx" ]; then
+		libreoffice $f &
+	elif [ "$ext" == "odf" ]; then
+		libreoffice $f &
 	elif [ "$ext" == "mp4" ]; then
 		vlc $f &
 	elif [ "$ext" == "mkv" ]; then

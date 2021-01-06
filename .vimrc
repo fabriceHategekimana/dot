@@ -79,6 +79,10 @@ let g:vimwiki_list = [{'path': '~/', 'ext':'.md', 'index':'note', 'syntax':'mark
 "|_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
                                              
 "liste de fonction
+function MyAppendOperator(type)
+    execute "normal! A"
+endfunction
+	
 function MkFiles(fichier)
 	execute "!cp ~/note/template/".a:fichier.".".a:fichier." ." 
 	execute "tabnew ".a:fichier.".".a:fichier
@@ -324,7 +328,7 @@ function Latex()
 	nnoremap <buffer> éii o\includegraphics[scale=1.2]{image}
 	inoremap <CR> \\<CR> 
 	nnoremap <buffer> <F5> :execute ":!pdflatex ".bufname("%")." && zathura ".expand('%:r').".pdf" <CR>
-endfunctio
+endfunction
 
 "------------------------------------BASH-------------------------------------
 function RunBashPart()
@@ -594,6 +598,8 @@ command Store !firefox https://vimawesome.com/ &
 command -nargs=+ -complete=help Help :tab help <args>
 command Makefile :call MakefileFunction()<CR>
 command -nargs=* Ctags :call CtagsFunction(<f-args>)<CR>
+command Pdf :!cs
+command! Vimscript :!firefox https://learnvimscriptthehardway.stevelosh.com/ &
 
 
 "    _         _                                                      _     
@@ -680,6 +686,9 @@ nnoremap <C-L> :tabn<CR>
 nnoremap <C-H> :tabp<CR>
 nnoremap <C-K> {
 nnoremap <C-J> }
+
+"pendig opperator
+nnoremap éa :set opfunc=MyAppendOperator<Space><Space>g@<CR>
 
 "Mouvement en mode pending operator
 onoremap in( :<C-U>normal! f(vi(<CR>
