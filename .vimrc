@@ -79,6 +79,13 @@ let g:vimwiki_list = [{'path': '~/', 'ext':'.md', 'index':'note', 'syntax':'mark
 "|_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
                                              
 "liste de fonction
+function! NextVariable()
+    call search("=","cW")
+    normal llv
+    call search(g:linePonctuation,"cW")
+    normal h
+endfunction
+
 function MyAppendOperator(type)
     execute "normal! A"
 endfunction
@@ -109,6 +116,44 @@ function CtagsFunction(...)
     for moreExtention in a:000
 	execute "!ctags **.".moreExtention
     endfor
+endfunction
+
+function! InsertToTextObject(type, ...)
+    let sel_save = &selection
+    let &selection = "inclusive"
+    let reg_save = @@
+
+    if a:0  " Invoked from Visual mode, use gv command.
+        silent exe "normal! gv"
+    else
+        silent exe "normal! `["
+    endif
+
+    startinsert
+
+    let &selection = sel_save
+    let @@ = reg_save
+endfunction
+
+
+function! AppendToTextObject(type, ...)
+    let sel_save = &selection
+    let &selection = "inclusive"
+    let reg_save = @@
+
+    if a:0
+        silent exe "normal! `>"
+        call feedkeys('a', 'n')
+    elseif a:type == 'line'
+        silent exe "normal! ']"
+        call feedkeys('A', 'n')
+    else
+        silent exe "normal! `]"
+        call feedkeys('a', 'n')
+    endif
+
+    let &selection = sel_save
+    let @@ = reg_save
 endfunction
 
 
@@ -267,6 +312,7 @@ endfunction
 function Python()
 	set nospell
 	let g:extention="py"
+	let g:linePonctuation="$"
 	set makeprg=python3\ %
 	set efm=%A\ \ File\ \"%f\"\\,\ line\ %l\\,\ in%.%#,%Z%m
 	
@@ -677,8 +723,8 @@ inoremap <C-S> <Right>
 inoremap <buffer>  <Esc>/_<CR>cw
 
 "Navigation avec lf
-nnoremap vp :vert term lf .<CR>
-nnoremap vs :term lf .<CR>
+nnoremap vp :vsplit .<CR>
+nnoremap sp :split .<CR>
 nnoremap tn :LfNewTab<CR>
 
 "Mouvements spéciaux
@@ -689,9 +735,14 @@ nnoremap <C-J> }
 
 "pendig opperator
 nnoremap éa :set opfunc=MyAppendOperator<Space><Space>g@<CR>
+nmap <silent> éi :set opfunc=InsertToTextObject<CR>g@
+vmap <silent> éi :<C-U>call InsertToTextObject(visualmode(), 1)<CR>
+nmap <silent> éa :set opfunc=AppendToTextObject<CR>g@
+vmap <silent> éa :<C-U>call AppendToTextObject(visualmode(), 1)<CR>
 
 "Mouvement en mode pending operator
 onoremap in( :<C-U>normal! f(vi(<CR>
 onoremap lp :normal t)vF,<CR>
 onoremap n" :<C-U>normal f"lvt"<CR>
 onoremap in) :<C-U>normal f)hvT(<CR>
+onoremap nv :call NextVariable()<CR>
