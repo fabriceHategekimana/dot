@@ -319,7 +319,7 @@ assign [class="Microsoft Teams - Preview"] 3
 assign [class="zoom"] 4
 assign [class="Inkscape"] 4
 #Espace de travail 7
-assign [class="SimpleScreenRecorder"] 7
+assign [class="obs"] 7
 
 #floating windows
 for_window [class="Tilda"] floating enable
