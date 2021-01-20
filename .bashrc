@@ -115,7 +115,7 @@ if ! shopt -oq posix; then
   fi
 fi
 export PATH=/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/home/fabrice/bin:/home/fabrice/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-export PATH=/usr/share/swift/swift-5.1-RELEASE-ubuntu18.04/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/home/fabrice/bin:/home/fabrice/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/fabrice/sh:/etc/firefox/:~/sh/
+export PATH=/usr/share/swift/swift-5.1-RELEASE-ubuntu18.04/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/usr/share/swift/usr/bin:/home/fabrice/bin:/home/fabrice/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/fabrice/sh:/etc/firefox/:~/sh/:~/idea-IC-203.6682.168/bin
 
 #afficher l'entrée de base
 figlet Jesus est Seigneur

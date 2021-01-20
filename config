@@ -81,15 +81,14 @@ bindsym $mod+Shift+q kill
 
 #BINDKEY
 #ligne numérique
-#launch custom program
-#tmux
+#launch cheat sheet
+#tmux cheat sheet
 bindsym $sup+1 exec feh --fullscreen --auto-zoom ~/Images/cheat_sheet/tmux.png
-#pour la calculatrice
-bindsym $sup+2 exec galculator
-#planning
-bindsym $sup+3 exec gnome-terminal -- bash ~/sh/mytask task
-#Pour Satom
-bindsym $sup+4 exec i3-msg [tiling] kill ; exec remmina ; exec teams ;  exec firefox
+#intellij cheat sheet
+bindsym $sup+2 exec feh --fullscreen --auto-zoom ~/Images/cheat_sheet/intellij.jpeg
+#vim cheat sheet
+bindsym $sup+3 exec feh --fullscreen --auto-zoom ~/Images/cheat_sheet/vim.jpeg
+
 #Mode normal
 bindsym $sup+5 exec i3-msg [tiling] kill ; split v ; exec gnome-terminal -- tty-clock ;  exec gnome-terminal -- bash ~/sh/mytask task ; exec firefox https://moodle.unige.ch/?redirect=0 ; exec firefox https://web.whatsapp.com/ ; exec gnome-terminal 
 #polybar
@@ -120,6 +119,10 @@ bindsym $sup+l exec gnome-terminal -- lf ~/sessions
 bindsym $sup+g exec gedit
 #gimp
 bindsym $sup+shift+g exec gimp
+#planning
+bindsym $sup+shift+T exec gnome-terminal -- bash ~/sh/mytask task
+#pour la calculatrice
+bindsym $sup+shift+c exec galculator
 #zathura
 bindsym $sup+z exec zathura
 #diary
@@ -253,9 +256,9 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-bindsym $mod+v mode "vim"
+bindsym $mod+i mode "intellij"
 
-mode "vim" {
+mode "intellij" {
         bindsym Escape mode "default"
 }
 
