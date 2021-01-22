@@ -97,12 +97,6 @@ function NeloParsing()
 	"retirer les espaces en trop à gauche
 	"%s/\(\D*\)\(\d.*\)/\2/g
 endfunction
-function! NextVariable()
-    call search("=","cW")
-    normal llv
-    call search(g:linePonctuation,"cW")
-    normal h
-endfunction
 
 function! MyAppendOperator(type)
     execute "normal! A"
@@ -318,6 +312,8 @@ function! Java()
 	let g:app=expand("%:p:h")
 	autocmd InsertLeave * 
 	imap <buffer> <C-C> <Esc><Plug>(JavaComplete-Imports-AddMissing)
+	nnoremap <buffer> énf /\(public\<Bar>private\)\ \(static\ \)\=\w\+\ \w\+(<CR>
+	nnoremap <buffer> énv /\w\+\(\.\w\+\)\=\(\w\+\)\=\(;\<Bar>\ =[^;]\+;\)<CR>
 	nnoremap <buffer> <F2> :call Note()<CR>
 	nnoremap <buffer> <F4> :terminal ++shell javac %:p:h:r/*.java<CR>
 	nnoremap <buffer> <F5> :terminal java %<CR>
@@ -785,8 +781,11 @@ vmap <silent> éa :<C-U>call AppendToTextObject(visualmode(), 1)<CR>
 onoremap in( :<C-U>normal! f(vi(<CR>
 onoremap lp :normal t)vF,<CR>
 onoremap n" :<C-U>normal f"lvt"<CR>
-onoremap in) :<C-U>normal f)hvT(<CR>
-onoremap nv :call NextVariable()<CR>
+onoremap in) :<C-U>call search('(')<Space><Bar><Space>normal! lvi)<CR>
+onoremap in] :<C-U>call search('[')<Space><Bar><Space>normal! lvi)<CR>
+onoremap nv :<C-U>call search('=')<Space><Bar><Space>normal! llv$h<CR>
+onoremap ns :<C-U>call search('"')<Space><Bar><Space>normal! lvt"<CR>
+onoremap ins :<C-U>call search("'")<Space><Bar><Space>normal! lvt'<CR>
 
 "    _         _                                                      _     
 "   / \  _   _| |_ ___   ___ ___  _ __ ___  _ __ ___   __ _ _ __   __| |___ 
