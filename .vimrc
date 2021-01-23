@@ -709,6 +709,7 @@ command! -nargs=1 Add normal! dd/<args>p
 command! Todo e todo.md
 command! -nargs=1 Rename call RenameFunction(<f-args>)
 command! -nargs=1 Search call SearchFunction(<f-args>)
+"command -nargs=1 Look vimgrep /<args>/j ../../cours/txt/*.txt<Space><Bar><Space>copen
 
 "  ____ _       _           _                               _             
 " / ___| | ___ | |__   __ _| |  _ __ ___   __ _ _ __  _ __ (_)_ __   __ _ 
@@ -765,8 +766,6 @@ nnoremap sp :split .<CR>
 nnoremap tn :LfNewTab<CR>
 
 "Mouvements spéciaux
-nnoremap <C-L> :tabn<CR>
-nnoremap <C-H> :tabp<CR>
 nnoremap <C-K> {
 nnoremap <C-J> }
 
