@@ -99,7 +99,7 @@ bindsym Print exec bash -i ~/sh/myimport images
 #capture rapide
 bindsym ctrl+Print exec bash -i ~/sh/myimport direct
 #note
-bindsym $sup+n exec sakura -e vim ~/note/remarques
+bindsym $sup+n exec sakura -e vim ~/note/remarques.md
 #bindsym $sup+n exec sakura -e vim -c "set nonu" ~/note/remarques
 #taskwarrior
 bindsym $sup+h exec gnome-terminal -- htop

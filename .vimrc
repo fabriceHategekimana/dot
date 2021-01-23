@@ -324,12 +324,12 @@ function! Java()
 	nnoremap <buffer> éd ^xx<Esc>
 	xnoremap <buffer> éd :normal ^xx<CR>
 	inoremap <buffer> print System.out.println();<Esc><Left>i
-	inoremap <buffer> function! public void (){<CR><CR>}<Esc><Up><Up>$Tda
-	inoremap <buffer> if if(){<CR><CR>}<Esc>2<Up>t)a
-	inoremap <buffer> else	else{<CR><CR>}<Up>
-	inoremap <buffer> try try{<CR><CR>}<CR>catch(InterruptedException e){<CR>System.out.println("Erreur");<CR>}<Esc><Up><Up><Up><Up>
-	inoremap <buffer> while while(){<CR><CR>}<Esc><Up><Up>t)a
-	inoremap <buffer> for for(int i= 0; i<len; i++){<CR><CR>}<Up>
+	inoremap <buffer> function public void (){<CR>}<Esc><Up>$Tda
+	inoremap <buffer> if if(){<CR>}<Esc><Up>t)a
+	inoremap <buffer> else	else{<CR>}<Up>
+	inoremap <buffer> try try{<CR>}<CR>catch(InterruptedException e){<CR>System.out.println("Erreur");<CR>}<Esc><Up><Up><Up><Up>
+	inoremap <buffer> while while(){<CR>}<Esc><Up>t)a
+	inoremap <buffer> for for(int i= 0; i<len; i++){<CR>}<Up>
 endfunction	
 
 "----------------------------------SCALA--------------------------------
@@ -749,7 +749,7 @@ nnoremap édb :cope<CR>
 nnoremap éct :Ctags
 nnoremap ! :!
 inoremap <C-S> <Right>
-inoremap <buffer>  <Esc>/_<CR>cw
+nnoremap éns /"<CR>
 "pour 'keep title'. cela suprime tout sauf les titres du fichier txt qu'on a
 "extait d'un pdf
 nnoremap ékt :g!//d<CR>
