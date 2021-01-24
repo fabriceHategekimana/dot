@@ -82,11 +82,15 @@ let g:vimwiki_list = [{'path': '~/', 'ext':'.md', 'index':'note', 'syntax':'mark
                                              
 "liste de fonction
 function RenameFunction(newName)
-	execute "%s/\<".@"."\>/".a:newName."/g"
+	execute "%s/\\<".@"."\\>/".a:newName."/g"
 endfunction
 
-function SearchFunction(newName)
-	execute "vimgrep/\<".@"."\>/i**"
+function SearchFunction(pattern)
+	execute "silent vimgrep/\\<".a:pattern."\\>/i ** | copen"
+endfunction
+
+function SearchFunction2()
+	execute "silent vimgrep/\\<".@"."\\>/i ** | copen"
 endfunction
 
 function NeloParsing()
@@ -275,14 +279,17 @@ endfunction
 "----------------------------------JAVA--------------------------------
 
 command -nargs=* -complete=dir New call NewFunction(<f-args>)
+command -nargs=1 -complete=dir GRename cfdo! %s//<args>/g | cclose | update
 
 function! NewFunction(type, name, ...)
+    	echom "package= ".a:0
 
     	if a:0 == 0
 	    let package=""
 	else
 	    let package=a:1
 	endif
+
 
 	"Le plugin lf fait des effets de bord sur la variable g:app
 	let g:inter=g:app
@@ -311,24 +318,46 @@ function! Java()
 	let g:extention= "java"
 	let g:app=expand("%:p:h")
 	autocmd InsertLeave * 
+	"Quand je quitte le mode insert, JavaComplete se charge de faire des
+	"corrections
 	imap <buffer> <C-C> <Esc><Plug>(JavaComplete-Imports-AddMissing)
+	"Déplace le curseur à la prochaine fonction
 	nnoremap <buffer> énf /\(public\<Bar>private\)\ \(static\ \)\=\w\+\ \w\+(<CR>
+	"Déplace le curseur à la prochaine variable
 	nnoremap <buffer> énv /\w\+\(\.\w\+\)\=\(\w\+\)\=\(;\<Bar>\ =[^;]\+;\)<CR>
-	nnoremap <buffer> <F2> :call Note()<CR>
-	nnoremap <buffer> <F4> :terminal ++shell javac %:p:h:r/*.java<CR>
-	nnoremap <buffer> <F5> :terminal java %<CR>
-	nnoremap <buffer> <F6> :terminal ++shell cd %:p:h && jdb %:t:r<CR>
-	nnoremap <buffer> <F9> :!bash ~/sh/mkjava.sh 
+	"Operator pending maping qui cible la prochaine variable"
+	onoremap nv :<C-U>call search('=')<Space><Bar><Space>normal! llvt;<CR>
+	"Operator pending maping qui cible la prochaine variable"
+	onoremap nc :<C-U>call search('//')<Space><Bar><Space>normal! llv$h<CR>
+	"Debug le code java
+	nnoremap <buffer> <F4> :terminal ++close ++shell cd %:p:h && jdb %:t:r<CR>
+	"Compile et execute le code
+	nnoremap <buffer> <F5> :terminal ++shell find . -type f -name "*.class" -delete && javac %:p:h:r/*.java && java %<CR>
+	"Permet de créer des classes java
+	nnoremap <buffer> <F6> :New<Space>
+
+	"Commente une ligne
 	nnoremap <buffer> éc ^i//<Esc>
+	"Commente des lignes
 	xnoremap <buffer> éc :normal I//<CR>
+	"Enlève le commentaire sur une ligne"
 	nnoremap <buffer> éd ^xx<Esc>
+	"Enlève le commentaire sur une sélection de ligne"
 	xnoremap <buffer> éd :normal ^xx<CR>
+
+	"Pseudo snippet pour le print
 	inoremap <buffer> print System.out.println();<Esc><Left>i
+	"Pseudo snippet pour faire une fonciton
 	inoremap <buffer> function public void (){<CR>}<Esc><Up>$Tda
+	"Pseudo snippet pour faire un if
 	inoremap <buffer> if if(){<CR>}<Esc><Up>t)a
+	"Pseudo snippet pour faire un else
 	inoremap <buffer> else	else{<CR>}<Up>
+	"Pseudo snippet pour faire un try
 	inoremap <buffer> try try{<CR>}<CR>catch(InterruptedException e){<CR>System.out.println("Erreur");<CR>}<Esc><Up><Up><Up><Up>
+	"Pseudo snippet pour faire un while
 	inoremap <buffer> while while(){<CR>}<Esc><Up>t)a
+	"Pseudo snippet pour faire un fore
 	inoremap <buffer> for for(int i= 0; i<len; i++){<CR>}<Up>
 endfunction	
 
@@ -449,7 +478,6 @@ function! Sh()
 	inoreabbrev <buffer> function! (){<CR><CR>}<Up><Up>
 	nnoremap <buffer> <F5> :!./%<CR>
 	xnoremap <buffer> <F5> y:call RunBashPart()<CR>
-	nnoremap <F2> :call Note()<CR>
 endfunction
 
 
@@ -651,7 +679,7 @@ function! RLike()
 
 	nnoremap <buffer> <F4> :!R<CR>
 	nnoremap <buffer> <F5> :!Rscript %<CR>
-	nnoremap <buffer> <F6> :!Rscript % | less<Esc>
+	nnoremap <buffer> <F6> :!Rscript % | !less<Esc>
 endfunction
 
 "----------------------MAKEFILE-----------------------------
@@ -755,8 +783,10 @@ nnoremap éns /"<CR>
 "extait d'un pdf
 nnoremap ékt :g!//d<CR>
 
-"Rename est là pour renommer le mot sur lequel on est
+"Rename est là pour renommer le mot sur lequel on est (portée du fichier actuel)
 nnoremap <buffer> érn yiw:Rename<Space>
+"Rename est là pour renommer le mot sur lequel on est (portée du projet actuel)
+nnoremap <buffer> égrn yiw:let<Space>@/=@"<CR>:call<Space>SearchFunction2()<Space><Bar><Space>GRename<Space>
 "search est là pour chercher le mot sur lequel on est dans plusieurs fichier
 nnoremap <buffer> ésr yiw:Search<Space>
 
@@ -777,13 +807,20 @@ nmap <silent> éa :set opfunc=AppendToTextObject<CR>g@
 vmap <silent> éa :<C-U>call AppendToTextObject(visualmode(), 1)<CR>
 
 "Mouvement en mode pending operator
-onoremap in( :<C-U>normal! f(vi(<CR>
 onoremap lp :normal t)vF,<CR>
 onoremap n" :<C-U>normal f"lvt"<CR>
+onoremap n' :<C-U>normal f'lvt'<CR>
+onoremap ip) :<C-U>call search('(','b')<Space><Bar><Space>normal! lvi)<CR>
+onoremap ip] :<C-U>call search('[','b')<Space><Bar><Space>normal! lvi]<CR>
+onoremap ip} :<C-U>call search('{','b')<Space><Bar><Space>normal! lvi}<CR>
 onoremap in) :<C-U>call search('(')<Space><Bar><Space>normal! lvi)<CR>
-onoremap in] :<C-U>call search('[')<Space><Bar><Space>normal! lvi)<CR>
+onoremap in] :<C-U>call search('[')<Space><Bar><Space>normal! lvi]<CR>
+onoremap in} :<C-U>call search('{')<Space><Bar><Space>normal! lvi}<CR>
+onoremap pv :<C-U>call search('=','b')<Space><Bar><Space>normal! llv$h<CR>
 onoremap nv :<C-U>call search('=')<Space><Bar><Space>normal! llv$h<CR>
+onoremap ps :<C-U>call search('"','b')<Space><Bar><Space>normal! lvt"<CR>
 onoremap ns :<C-U>call search('"')<Space><Bar><Space>normal! lvt"<CR>
+onoremap ips :<C-U>call search("'",'b')<Space><Bar><Space>normal! lvt'<CR>
 onoremap ins :<C-U>call search("'")<Space><Bar><Space>normal! lvt'<CR>
 
 "    _         _                                                      _     
@@ -794,28 +831,31 @@ onoremap ins :<C-U>call search("'")<Space><Bar><Space>normal! lvt'<CR>
                                                                            
 
 "autocommande
-autocmd FileType r call RLike()
-autocmd FileType c call CLike()
-autocmd FileType cpp call CppLike()
-autocmd FileType java call Java()
-autocmd FileType javascript call Nodejs()
-autocmd FileType,BufNewFile python call Python()
-autocmd FileType,BufNewFile octave call OctaveLike()
-autocmd FileType tex call Latex()
-autocmd FileType,BufNewFile sh call Sh()
-autocmd FileType,BufNewFile sql call Sql()
-autocmd FileType markdown call Markdown()
-autocmd BufReadPre,BufNewFile *.m call OctaveLike()
-autocmd BufReadPre,BufNewFile *.pl call Prolog()
-autocmd BufReadPre,BufNewFile *.php call Php()
-autocmd BufReadPre,BufNewFile note_* call NoteWindow()
-autocmd BufRead,BufNewFile /tmp/* call Project()
-autocmd BufReadPre,BufNewFile *.s call ARM()
-autocmd BufReadPre,BufNewFile *.xba call Basic()
-autocmd BufReadPre,BufNewFile ~/Documents/Répertoire/note/* call Programme()
-autocmd BufReadPre,BufNewFile ~/.vimrc call Vimrc()
-autocmd BufReadPre,BufNewFile *.ci call CI()
-"autocmd VimEnter * NERDTree
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-autocmd FileType scala call Scala()
-autocmd BufReadPre,BufNewFile Makefile call Makefile()
+augroup programmation
+    autocmd!
+    autocmd FileType r call RLike()
+    autocmd FileType c call CLike()
+    autocmd FileType cpp call CppLike()
+    autocmd FileType java call Java()
+    autocmd FileType javascript call Nodejs()
+    autocmd FileType,BufNewFile python call Python()
+    autocmd FileType,BufNewFile octave call OctaveLike()
+    autocmd FileType tex call Latex()
+    autocmd FileType,BufNewFile sh call Sh()
+    autocmd FileType,BufNewFile sql call Sql()
+    autocmd FileType markdown call Markdown()
+    autocmd BufReadPre,BufNewFile *.m call OctaveLike()
+    autocmd BufReadPre,BufNewFile *.pl call Prolog()
+    autocmd BufReadPre,BufNewFile *.php call Php()
+    autocmd BufReadPre,BufNewFile note_* call NoteWindow()
+    autocmd BufRead,BufNewFile /tmp/* call Project()
+    autocmd BufReadPre,BufNewFile *.s call ARM()
+    autocmd BufReadPre,BufNewFile *.xba call Basic()
+    autocmd BufReadPre,BufNewFile ~/Documents/Répertoire/note/* call Programme()
+    autocmd BufReadPre,BufNewFile ~/.vimrc call Vimrc()
+    autocmd BufReadPre,BufNewFile *.ci call CI()
+    "autocmd VimEnter * NERDTree
+    autocmd FileType java setlocal omnifunc=javacomplete#Complete
+    autocmd FileType scala call Scala()
+    autocmd BufReadPre,BufNewFile Makefile call Makefile()
+augroup END
