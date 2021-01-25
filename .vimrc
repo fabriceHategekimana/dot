@@ -12,6 +12,8 @@ Plug 'https://github.com/wikitopian/hardmode.git'
 Plug 'https://github.com/ptzz/lf.vim.git'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'derekwyatt/vim-scala'
+Plug 'vim-scripts/AutoComplPop'
+Plug 'majutsushi/tagbar'
 
 call plug#end()
 
@@ -54,7 +56,6 @@ color elflord
 "set relativenumber
 set laststatus=2
 set complete+=kspell 
-set completeopt+=noselect
 set path+=**
 set cursorline
 set wildmenu
@@ -242,7 +243,7 @@ function! CppLike()
 	let g:extention_supplementaire= "hpp"
 	"Définition d'une variable global pour changer le nombre de processus parallèles
 	let g:parallele= 1
-	"Raccourci pour le langage c, le java et le javascript
+	
 	nnoremap <buffer> éc I//<Esc>$<CR>
 	xnoremap <buffer> éc :normal I//<CR>
 	nnoremap <buffer> éd ^xx
@@ -306,7 +307,7 @@ function! NewFunction(type, name, ...)
 	elseif a:type == "package"
 	    	execute "!mkdir ".g:app."/".a:name
 	endif
-	
+
 	if a:type != "package"
 	    let g:app=g:inter
 	    execute "saveas ".g:app."/".package.a:name.".java"
@@ -333,8 +334,10 @@ function! Java()
 	nnoremap <buffer> <F4> :terminal ++close ++shell cd %:p:h && jdb %:t:r<CR>
 	"Compile et execute le code
 	nnoremap <buffer> <F5> :terminal ++shell find . -type f -name "*.class" -delete && javac %:p:h:r/*.java && java %<CR>
-	"Permet de créer des classes java
+	"Permet de créer des fichiers java
 	nnoremap <buffer> <F6> :New<Space>
+	"Permet de créer des fonctions java
+	nmap écf G:call search('}','b')<CR>ofunction<Space>
 
 	"Commente une ligne
 	nnoremap <buffer> éc ^i//<Esc>
@@ -348,17 +351,17 @@ function! Java()
 	"Pseudo snippet pour le print
 	inoremap <buffer> print System.out.println();<Esc><Left>i
 	"Pseudo snippet pour faire une fonciton
-	inoremap <buffer> function public void (){<CR>}<Esc><Up>$Tda
+	inoreabbrev <buffer> function public void (){<CR>}<Esc><Up>$Tda
 	"Pseudo snippet pour faire un if
-	inoremap <buffer> if if(){<CR>}<Esc><Up>t)a
+	inoreabbrev <buffer> if if(){<CR>}<Esc><Up>t)a
 	"Pseudo snippet pour faire un else
-	inoremap <buffer> else	else{<CR>}<Up>
+	inoreabbrev <buffer> else	else{<CR>}<Up>
 	"Pseudo snippet pour faire un try
-	inoremap <buffer> try try{<CR>}<CR>catch(InterruptedException e){<CR>System.out.println("Erreur");<CR>}<Esc><Up><Up><Up><Up>
+	inoreabbrev <buffer> try try{<CR>}<CR>catch(InterruptedException e){<CR>System.out.println("Erreur");<CR>}<Esc><Up><Up><Up><Up>
 	"Pseudo snippet pour faire un while
-	inoremap <buffer> while while(){<CR>}<Esc><Up>t)a
+	inoreabbrev <buffer> while while(){<CR>}<Esc><Up>t)a
 	"Pseudo snippet pour faire un fore
-	inoremap <buffer> for for(int i= 0; i<len; i++){<CR>}<Up>
+	inoreabbrev <buffer> for for(int i= 0; i<len; i++){<CR>}<Up>
 endfunction	
 
 "----------------------------------SCALA--------------------------------
@@ -773,13 +776,14 @@ inoremap [ []<left>
 inoremap [[ [<Esc>
 inoremap [[[ [<Esc>A]<Esc> 
 
-"Raccourci pour le code en général
+"Mes raccourci pour le code en général
 nnoremap édb :cope<CR>
 nnoremap éct :Ctags
 nnoremap ! :!
 inoremap <C-S> <Right>
 nnoremap éns /"<CR>
 inoremap <C-C> <Esc>
+nnoremap étb :TagbarToggle<CR>
 
 "pour 'keep title'. cela suprime tout sauf les titres du fichier txt qu'on a
 "extait d'un pdf
