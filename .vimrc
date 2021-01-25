@@ -436,7 +436,7 @@ function! OctaveLike()
 	nnoremap <buffer> éc ^i%<Esc><CR>
 	nnoremap <buffer> édc ^x 
 	nnoremap <buffer> <F4> :!octave --no-gui<CR>
-	nnoremap <buffer> <F5> :call RunOctave()<CR>
+	nnoremap <buffer> <F5> :terminal octave %<CR>
 endfunction
 
 
@@ -555,7 +555,7 @@ function! Prolog()
 	let g:extention="pl"
 	nnoremap <buffer> éc I%<Esc>
 	nnoremap <buffer> <F4> :!swipl<CR>
-	nnoremap <buffer> <F5> :!swipl %<CR>
+	nnoremap <buffer> <F5> :terminal swipl %<CR>
 endfunction
 
 "---------------------------------------PHP-------------------------------------
@@ -779,6 +779,8 @@ nnoremap éct :Ctags
 nnoremap ! :!
 inoremap <C-S> <Right>
 nnoremap éns /"<CR>
+inoremap <C-C> <Esc>
+
 "pour 'keep title'. cela suprime tout sauf les titres du fichier txt qu'on a
 "extait d'un pdf
 nnoremap ékt :g!//d<CR>
