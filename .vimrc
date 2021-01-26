@@ -318,7 +318,7 @@ function! Java()
 	set nospell
 	let g:extention= "java"
 	let g:app=expand("%:p:h")
-	autocmd InsertLeave * 
+	let g:JavaComplete_IgnoreErrorMsg=1
 	"Quand je quitte le mode insert, JavaComplete se charge de faire des
 	"corrections
 	imap <buffer> <C-C> <Esc><Plug>(JavaComplete-Imports-AddMissing)
