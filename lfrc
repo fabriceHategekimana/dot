@@ -87,6 +87,8 @@ cmd open ${{
 		libreoffice $f &
 	elif [ "$ext" == "odf" ]; then
 		libreoffice $f &
+	elif [ "$ext" == "odg" ]; then
+		libreoffice $f &
 	elif [ "$ext" == "mp4" ]; then
 		vlc $f &
 	elif [ "$ext" == "mkv" ]; then
