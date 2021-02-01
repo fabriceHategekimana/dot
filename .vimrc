@@ -103,9 +103,6 @@ function NeloParsing()
 	"%s/\(\D*\)\(\d.*\)/\2/g
 endfunction
 
-function! MyAppendOperator(type)
-    execute "normal! A"
-endfunction
 	
 function! MkFiles(fichier)
 	execute "!cp ~/note/template/".a:fichier.".".a:fichier." ." 
@@ -152,6 +149,12 @@ function! InsertToTextObject(type, ...)
     let @@ = reg_save
 endfunction
 
+function! DoubleQuoteOperator(type)
+    let sel_save = &selection
+    let &selection = "inclusive"
+    normal! `>a"
+    let &selection = sel_save
+endfunction
 
 function! AppendToTextObject(type, ...)
     let sel_save = &selection
@@ -805,8 +808,9 @@ nnoremap tn :LfNewTab<CR>
 nnoremap <C-K> {
 nnoremap <C-J> }
 
-"pendig opperator
-nnoremap éa :set opfunc=MyAppendOperator<Space><Space>g@<CR>
+"pendig opperator (g@)
+nnoremap éa :set opfunc=MyAppendOperator<CR>
+nnoremap éq :set opfunc=DoubleQuoteOperator<CR>g@
 nmap <silent> éi :set opfunc=InsertToTextObject<CR>g@
 vmap <silent> éi :<C-U>call InsertToTextObject(visualmode(), 1)<CR>
 nmap <silent> éa :set opfunc=AppendToTextObject<CR>g@
