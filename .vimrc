@@ -294,7 +294,6 @@ function! NewFunction(type, name, ...)
 	    let package=a:1
 	endif
 
-
 	"Le plugin lf fait des effets de bord sur la variable g:app
 	let g:inter=g:app
 
@@ -327,6 +326,7 @@ function! Java()
 	imap <buffer> <C-C> <Esc><Plug>(JavaComplete-Imports-AddMissing)
 	"Déplace le curseur à la prochaine fonction
 	nnoremap <buffer> énf /\(public\<Bar>private\)\ \(static\ \)\=\w\+\ \w\+(<CR>
+	nnoremap <buffer> énF :/\(public\<Bar>private\) \(static \)\=\w\+ \w\+(/normal! f(B<CR>
 	"Déplace le curseur à la prochaine variable
 	nnoremap <buffer> énv /\w\+\(\.\w\+\)\=\(\w\+\)\=\(;\<Bar>\ =[^;]\+;\)<CR>
 	"Operator pending maping qui cible la prochaine variable"
