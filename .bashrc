@@ -123,4 +123,4 @@ figlet Jesus est Seigneur
 #les alias basic modifiés
 alias cd='export P=$P0 && P0=$(pwd) && cd'
 alias rm='rm -r'
-alias exemple='mv ~/note/exemple/ ~/temp/'
+alias exemple='cp ~/note/exemple/ ~/temp/'

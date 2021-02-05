@@ -11,7 +11,6 @@ Plug 'vimwiki/vimwiki'
 Plug 'https://github.com/wikitopian/hardmode.git'
 Plug 'https://github.com/ptzz/lf.vim.git'
 Plug 'artur-shaik/vim-javacomplete2'
-Plug 'derekwyatt/vim-scala'
 Plug 'vim-scripts/AutoComplPop'
 Plug 'majutsushi/tagbar'
 
