@@ -125,10 +125,7 @@ function! Note()
 endfunction
 
 function! CtagsFunction(...)
-    execute "!ctags **.".g:extention
-    for moreExtention in a:000
-	execute "!ctags **.".moreExtention
-    endfor
+    execute "!ctags -R *"
 endfunction
 
 function! InsertToTextObject(type, ...)
@@ -321,8 +318,6 @@ function! Java()
 	let g:app=expand("%:p:h")
 	let g:JavaComplete_IgnoreErrorMsg=1
 	"Quand je quitte le mode insert, JavaComplete se charge de faire des
-	"corrections
-	imap <buffer> <C-C> <Esc><Plug>(JavaComplete-Imports-AddMissing)
 	"Déplace le curseur à la prochaine fonction
 	nnoremap <buffer> énf /\(public\<Bar>private\)\ \(static\ \)\=\w\+\ \w\+(<CR>
 	nnoremap <buffer> énF :/\(public\<Bar>private\) \(static \)\=\w\+ \w\+(/normal! f(B<CR>
