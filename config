@@ -115,10 +115,10 @@ bindsym $sup+y exec gnome-terminal -- tty-clock -c
 bindsym $sup+p exec gnome-terminal -- bash ~/sh/planning
 #sessions
 bindsym $sup+l exec gnome-terminal -- lf ~/sessions
-#gedit
-bindsym $sup+g exec gedit
 #gimp
-bindsym $sup+shift+g exec gimp
+bindsym $sup+g exec gimp
+#intellij
+bindsym $sup+i exec idea.sh
 #planning
 bindsym $sup+shift+T exec gnome-terminal -- bash ~/sh/mytask task
 #pour la calculatrice
