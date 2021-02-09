@@ -639,10 +639,20 @@ function! Basic()
 endfunction
 
 function! LinkImage()
+	if ! filereadable("images")
+		!mkdir images && echo création du dossier images
+	endif
 	execute ":normal! ^d$"
 	let formated= substitute(@", " ", "_", "g")
-	execute ":normal! i![".formated."](../../images/".formated.".png)"
-	execute ":! ~/sh/myimport vim ".formated
+	execute ":normal! i![".formated."](images/".formated.".png)"
+	execute ":!import images/".formated.".png"
+endfunction
+
+function! MakefileFunction()
+	if ! filereadable("Makefile")
+		!cp ~/note/Makefile .
+	endif
+	tabnew Makefile
 endfunction
 
 function! MakeSpace()
