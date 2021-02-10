@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+for file in *
+do
+	newName=$(python3 ~/python/format.py "$file")
+	if [ -n "$newName" ]; then
+		mv "$file" $newName
+	fi
+done

@@ -1,0 +1,30 @@
+#!/bin/bash
+nomUnique=$(python3 -c "print('$1'.split('.')[0])")
+if [ "$2" == "tex" ]; then
+	pandoc $1 -o $nomUnique.pdf
+elif [ "$2" == "pdf" ];  then
+	pandoc $1 -H ~/note/gfm.css -o $nomUnique.html && wkhtmltopdf $nomUnique.html $nomUnique.pdf
+	#pandoc $1 -H ~/temp/gfm.css -o $nomUnique.html && wkhtmltopdf $nomUnique.html $nomUnique.pdf
+elif [ "$2" == "html" ];  then
+	pandoc -s $1 -H ~/note/gfm.css -o $nomUnique.html && chromium $nomUnique.html &
+elif [ "$2" == "pres" ];  then
+	pandoc -t beamer $1 -o $nomUnique.pdf
+elif [ "$2" == "docx" ];  then
+	pandoc $1 -o $nomUnique.docx && libreoffice $nomUnique.docx &
+elif [ "$2" == "odt" ];  then
+	pandoc $1 -o $nomUnique.odt && libreoffice $nomUnique.odt &
+elif [ "$1" == "-h" ];  then
+    	echo "
+CONVERT MARKDOWN FILE
+Usage:
+	compmd file.md [target]
+targets:
+tex	convert to pdf with latex engine
+pdf 	convert to pdf with GFM (actually not working)
+html	convert to html
+pres	convert to beamer pdf presentation
+docx	convert to a docx document
+odt 	convert to odt document
+-h	show this help menu
+	"
+fi

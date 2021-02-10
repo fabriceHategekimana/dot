@@ -1,0 +1,62 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+	while read entree
+	do
+		instruction=$(python3 -c "print('$entree'.split(' ')[0])")
+		reste=$(python3 -c "print(' '.join('$entree'.split(' ')[1:]))")
+		#on prend son appel par alias (sinon ça ne marche pas en directe)
+		instruction=$(cat ~/.bashrc | grep "alias $instruction=")
+		if [ -z $instruction ]; then
+			$entree&
+		else
+			#on prend le code en brute
+			instruction=$(python3 -c "print(\"$instruction\".split('\'')[1])")
+			#on enlève le "&"
+			instruction=$(python3 -c "print(\"$instruction\".replace('&', ''))")
+			$instruction $reste
+		fi
+		break
+	done
+elif [ "$1" == "search" ]; then 
+	cd ~/sh
+	ranger
+elif [ "$1" == "-s" ]; then 
+	cd ~
+	#on mémorise les alias
+	echo "$(alias)" > listeAlias.txt
+	#on compresse les notes, les scripts, python et les fichiers de configuration
+	mv ~/sh
+	zip -r configuration sh note python .bashrc .vimrc .tmux_conf listeAlias.txt
+	save configuration.zip
+elif [ "$1" == "-h" ]; then 
+	echo"
+	blank => wait to execute a commande 
+	-s => save all the command in a zip \"command.zip\" and send it to my personnal drive
+	-h => show the help menu	
+	create => create a new command with a dedicated script and a dedicated alias
+	search => go to the sh folder
+	other => create a command with the two first parameter (name, command)
+	"
+elif [ "$1" == "create" ];  then
+	cd ~/sh
+	touch $2
+	echo "#!bin/bash" $2
+	chmod u+x $2
+	. ~/.bashrc
+	vim $2
+else
+	if [ -z $2 ]; then
+		vim ~/sh/$1	
+	else
+		echo "alias $1='$2'"
+
+		echo "Est-ce que cela vous convient? [y/n]"
+		read ok
+
+		if [ "$ok" = "y" ]; then
+			echo "alias $1='$2'" >> ~/.bashrc
+			. ~/.bashrc
+		fi
+	fi
+fi

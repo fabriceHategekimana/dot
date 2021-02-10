@@ -1,0 +1,19 @@
+#!/bin/bash
+#On prend un dossier en entrée
+DATABASENAME="panamapapers"
+
+VAR="/home/fabrice/neo4j-community-4.1.3/bin/neo4j-admin import --database $DATABASENAME"
+for ELEMENT in $(ls /home/fabrice/data); do
+	existe=$(echo ${ELEMENT} | grep nodes -c)
+	if [ "$existe" == "1" ]; then
+		#On crée la première lettre
+		TITLE=$(python3 -c "print('${ELEMENT}'.split('.')[2])")
+		TITLE=$(python3 -c "print('${TITLE}'[0].upper()+'${TITLE}'[1:])")
+	  VAR+=" --nodes=${TITLE}=/home/fabrice/data/${ELEMENT}"
+	  #VAR+=",${ELEMENT}"
+	fi
+done
+#VAR+="'"
+echo "$VAR"
+bash $VAR
+

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+depart=$(pwd)
+destination=~/Documents/autre/personnes/fabrice
+chemin=/run/user/1000/gvfs
+
+cd $chemin
+
+#On arrive dans le dossier de selection des apareils
+for i in $(ls |head -n 1);
+do
+	cd $i;
+done
+
+#on entre dans le premier portable disponible
+for i in $(ls | sed "1d" | head -n 1);
+do
+	cd $i;
+done
+
+#on commence à faire les déplacements
+cp -rufv WhatsApp $destination &
+echo "WhatsApp terminé"
+cp -rufv DCIM $destination &
+echo "DCIM terminé"
+cp -rufv Download $destination &
+echo "Download  terminé"
+cp -rufv Documents $destination &
+echo "Document  terminé"
+cp -rufv Video $destination &
+echo "Video  terminé"
+cp -rufv Music $destination &
+echo "Music  terminé"
+
+#Signaler que la copie est terminée
+echo "La copie est terminée"
+
+cd $depart

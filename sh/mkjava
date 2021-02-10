@@ -1,0 +1,58 @@
+#!/bin/bash
+#création d'une classe main
+
+if [ "$1" == "project" ]; then
+       mkdir -p src/com/fabrice/$2
+       cd src/com/fabrice/$2
+	touch $2.java
+	echo "
+public class $2 {
+	public static void main(String[] args){
+
+	}	
+}" >> $2.java
+
+elif [ "$1" ==  "main" ]; then
+	touch $2.java
+	echo "
+public class $2 {
+	public static void main(String[] args){
+
+	}	
+}" >> $2.java
+#création d'une classe classique
+elif [ "$1" == "class" ]; then
+	filepath=$(pwd)
+	parentname="$(basename $filepath)" 
+	for i in ${@:2};
+	do
+		touch $i.java
+		echo "
+package $parentname;
+public class $i{
+	public $i(){
+		
+	}	
+}" >> $i.java
+	done
+#création d'une classe abstraite
+elif [ "$1" == "abstract" ]; then
+	for i in $@
+	do
+		if [ "$i" != "abstract" ]; then
+			touch $i.java
+			echo "
+abstract class $i{
+
+}" >> $i.java
+		fi
+	done
+#page help
+else
+	echo"
+	blank	  create a Makefile and a .set.sh
+	main	  create a main class
+	class	  create a standard class
+	abstract  create an abstract class
+	"
+fi

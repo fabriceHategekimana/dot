@@ -1,0 +1,29 @@
+#!/bin/bash
+open(){
+#coupe la fenêtre en 4 (les numéros changent à chaque coupure)
+tmux split-window -v -t 0
+tmux split-window -h -t 0
+tmux split-window -h -t 2
+
+#nettoyer toutes les fenêtres
+tmux send-keys -t 0 "clear" Enter
+tmux send-keys -t 1 "clear" Enter
+tmux send-keys -t 2 "clear" Enter
+tmux send-keys -t 3 "clear" Enter
+
+#se déplace à la première fenètre
+tmux select-pane -t 0
+}
+
+close(){ 
+	tmux send-keys -t 3 "exit" Enter
+	tmux send-keys -t 2 "exit" Enter
+	tmux send-keys -t 1 "exit" Enter
+	tmux send-keys -t 0 "clear" Enter
+}
+
+if [ -z "$1" ]; then
+	open
+else
+	close
+fi

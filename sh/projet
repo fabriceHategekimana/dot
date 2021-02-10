@@ -1,0 +1,158 @@
+#!/bin/bash
+#variables de départ
+startingPoint=$(pwd)
+projectFolder=~/projet
+
+
+
+#fonctions de départ
+goToStartingPoint(){ 
+	cd $startingPoint
+}
+goToProjectFolder(){
+	cd $projectFolder
+}
+projectExists(){
+	projects=$(ls $projectFolder)
+	exists=$(echo $projects | grep -o $1)
+	if [ -z $exists ]; then
+		exists=0	
+	else
+		exists=1
+	fi
+}
+existsOrSelect(){
+	projectExists $1
+	if [ $exists == 1 ]; then
+		name=$1
+	else
+		goToProjectFolder
+		select project in *
+		do
+			name=$project
+			break;
+		done
+		goToStartingPoint
+	fi
+}
+
+createMakefile(){
+	touch Makefile
+	echo "
+PROJET=project:$name
+all: task
+ 
+start: FORCE
+	zathura *.pdf & 2>error && vim -S Session.vim 2>error && rm error
+addtask: FORCE
+	. ~/sh/mytask +projet
+summary: FORCE
+	task \$(PROJET) summary
+task: FORCE
+	task \$(PROJET)
+close: FORCE
+	task \$(PROJET) done
+note: FORCE
+	vim note/note.md
+pdf: FORCE
+	cd pdf && bash ~/sh/cs
+FORCE:
+
+" > Makefile
+}
+
+createDoc(){
+	. ~/sh/mkdoc
+}
+
+executer(){
+	if [ "$1" == "create" ]; then
+# Pour la création d'un projet, il nous faut:
+		shift
+		goToProjectFolder
+		name=$1
+		mkdir $name
+		cd $name
+		createMakefile
+		mkdir note
+		touch note/note.md
+		mkdir pdf
+		mkdir images
+		shift
+		goToStartingPoint
+		cp -r $@ $projectFolder/$name  2> error
+		rm error
+	elif [ "$1" == "add" ]; then
+		shift
+		#will get the $name for later
+		existsOrSelect $1
+		if [ $exists == 1 ]; then
+		      shift 
+		fi	
+		cp -r "$@" $projectFolder/$name
+		cd $projectFolder/$name
+	elif [ "$1" == "delete" ]; then
+		shift
+		if [ $# == 0 ]; then
+			goToProjectFolder
+			select project in *	
+			do
+				rm -r $projectFolder/$project
+				break;
+			done
+			goToStartingPoint
+		else
+			for project in "$@"
+			do
+				rm -r $projectFolder/$project
+			done
+		fi
+	elif [ "$1" == "push" ]; then
+		goToProjectFolder
+		#mettre à jour calcurse
+		cp -r ~/projet/calcurse/calcurse/todo ~/projet/calcurse/calcurse/apts ~/projet/calcurse/calcurse/notes ~/projet/calcurse/data
+		#code pour Github
+		git add .
+		git commit -m "update"
+		git push
+	elif [ "$1" == "pull" ]; then
+		goToProjectFolder
+		git pull
+	elif [ "$1" == "archive" ]; then
+		goToProjectFolder
+		select project in *
+		do
+			mv -i $projectFolder/$project ~/Documents/archive
+		done
+	elif [ "$1" == "Makefile" ]; then
+		$name=${PWD##*/}
+		rm Makefile 2>error
+		createMakefile
+		rm error
+	elif [ "$1" == "-h" ];  then
+		echo "
+		void =>	display all the project
+		[project name] => go directly in the project selected
+		create => create a new projet with the given name and files
+		add => add new files to the project
+		delete => delete a project and its content
+		push => save all the project to github
+		pull => refresh all the project from github
+		archive => move projects to the selected directory
+		Makefile => generate a default Makefile
+		"
+	else
+		existsOrSelect $1
+		cd $projectFolder
+		cd $name
+		shift
+		if [ "$1" == "addtask" ]; then
+			shift
+			make addtask ARGS="$@"
+		else
+			make $1
+		fi
+	fi
+}
+
+executer $@

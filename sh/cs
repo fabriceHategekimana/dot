@@ -1,0 +1,16 @@
+#!/bin/bash
+#pdf reader
+pdfreader=zathura
+
+if [ -z "$1" ]; then
+	select pdf in *.pdf
+	do
+		$pdfreader "$pdf" &
+	done
+else
+	select pdf in $1/*.pdf
+	do
+		$pdfreader "$pdf" &
+	done
+fi
+

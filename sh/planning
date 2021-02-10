@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ "$1" == "reset" ]; then
+	date=$(date)
+	formated=$(python3 -c "print('$date'.replace(' ', '_'))")
+	cp ~/projet/task/Planning.csv ~/projet/task/old/$formated
+	cp -f ~/projet/task/data/Planning.csv ~/projet/task/
+elif [ "$1" == "-h" ]; then
+	echo "
+	[blank]	=> open the planning
+	reset	=> recreate a default planning
+	-h	=> show this help menu
+	"
+else
+	#on se connecte au planning
+	sc-im ~/projet/task/Planning.csv
+fi

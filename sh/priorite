@@ -1,0 +1,17 @@
+#!/bin/bash
+display(){ 
+	. ~/sh/four $@
+}
+
+
+if [ -z $1 ]; then
+	display
+	tmux send-keys -t 0 "projet activite" Enter
+	tmux send-keys -t 1 "bash ~/sh/planning" Enter
+	tmux send-keys -t 2 "bash ~/sh/mytask task" Enter
+	tmux send-keys -t 3 "bash ~/sh/projet" Enter
+else
+	tmux send-keys -t 0 ":q!" Enter
+	tmux send-keys -t 1 ":q!" Enter
+	display close
+fi

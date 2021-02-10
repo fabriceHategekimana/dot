@@ -1,0 +1,66 @@
+#!/bin/bash
+#Définition de variable et de fonction
+programmeFile=~/Documents/Répertoire
+
+rechercher(){ 
+	. ~/sh/mysearch $@
+}
+
+#On retien l'ancienne position
+oldDirectory=$(pwd)
+
+#On va dans le dossier en question
+cd $programmeFile
+
+if [ "$1" == "u" ]; then #pour dire update
+	#on met tout en pdf
+	libreoffice --convert-to pdf *.odp
+	#conversion en txt besoin de le faire avec une boucle for sinon ça marche pas
+	for pdf in *.pdf
+	do
+		pdftotext $pdf
+	done
+	#suppression des pdf
+	rm *.pdf
+	#déplacement des txt
+	mv -f *.txt txt
+elif [ "$1" == "s" ]; then # pour dire search
+	shift
+	#on va dans txt
+	cd txt
+	#on fait une recherche
+	rechercher $@ >> ../note/search.md
+	cd $oldDirectory
+elif [ "$1" == "c" ]; then # pour dire create
+	soffice macro:///standard.Module1.main
+elif [ "$1" == "site" ]; then
+	firefox https://sites.google.com/d/1aCN-ySZjs7T1L_7yzEUy8BmNsCgbIomI/p/16x-o-Usja24zuNQ-JBa9ekJ1EQ4N9c4x/edit &
+elif [ "$1" == "new" ]; then # pour dire create
+	cd note
+	new=$(python3 -c "print('$(date --date="last sunday" +%a_%d_%b_%Y)'.replace(' ','_'))")
+	mv programme.md old/$new.md
+	touch programme.md
+	echo "
+ENTRÉE
+
+ADORATION
+
+LOUANGE
+
+OFFRANDES
+
+CLÔTURE
+	" >> programme.md
+	echo "" > search.md
+elif [ "$1" == "-h" ]; then # pour dire help
+	echo"
+	u => update the content of all the pptx into the database (txt)
+	s => search all given index in the database (txt)
+	c => create quickly and easely a odp file with selected music
+	p => create a programme.md file with all the sections
+	-h => show this help menu
+	"
+else
+	cd note
+fi
+

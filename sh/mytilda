@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while read commande
+do
+       clear
+       bash -i $commande
+       break
+done 
+
+echo "hello"

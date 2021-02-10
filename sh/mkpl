@@ -1,0 +1,13 @@
+#!/bin/bash
+#si on a ajouter le paramêtre "-d" alors on crée un dossier sinon, on crée sur place
+if [ "$1" == "-d" ]; then
+	NOM=$2
+	mkdir $NOM
+	P0=P && P=$(pwd) && cd $NOM
+else
+	NOM=$1
+fi
+
+#ici on entre dans le dossier, on crée un fichier et on le remplit
+touch $NOM.pl
+

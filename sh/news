@@ -1,0 +1,7 @@
+#!/bin/bash
+
+firefox https://fr.euronews.com/bulletin &
+firefox https://www.rts.ch/info/ &
+firefox https://www.ictjournal.ch/ &
+firefox https://fr.wikipedia.org/wiki/Wikip%C3%A9dia:Accueil_principal &
+firefox https://www.arte.tv/fr/ &

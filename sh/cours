@@ -1,0 +1,150 @@
+#!/bin/bash
+#variables de départ
+startingPoint=$(pwd)
+coursFolder=~/cours
+
+
+#fonctions de départ
+goToStartingPoint(){ 
+	cd $startingPoint
+}
+goTosimpleCoursFolder(){
+	cd $coursFolder
+}
+simpleCoursExists(){
+	cours=$(ls $coursFolder)
+	exists=$(echo $cours | grep -o $1)
+	if [ -z $exisls ]; then
+		exists=0	
+	else
+		exists=1
+	fi
+}
+existsOrSelect(){
+	simpleCoursExists $1
+	if [ $exists == 1 ]; then
+		name=$1
+	else
+		goTosimpleCoursFolder
+		select simpleCours in *
+		do
+			name=$simpleCours
+			break;
+		done
+		goToStartingPoint
+	fi
+}
+
+createFiles(){
+	touch Makefile
+	echo "
+COURS=$1
+all: task
+ 
+revisions: FORCE
+	cd ~/cours/$1/revisions
+exercices: FORCE
+	cd ~/cours/$1/exercices
+tps: FORCE
+	cd ~/cours/$1/tps
+addtask: FORCE
+	bash ~/sh/mytask +cours
+summary: FORCE
+	task \$(COURS) summary
+task: FORCE
+	task \$(COURS)\$(SUB)
+note: FORCE
+	vim note/note.md
+pdf: FORCE
+	cd pdf && bash ~/sh/cs
+FORCE:
+" >> Makefile
+	mkdir note
+	touch note/notes.md
+	mkdir images
+	mkdir pdf
+	mkdir tps
+}
+
+createDoc(){
+	. ~/sh/mkdoc
+}
+
+executer(){
+	if [ "$1" == "create" ]; then
+		shift
+		goTosimpleCoursFolder
+		name=$1
+		mkdir $name
+		cd $name
+		createFiles
+		shift
+		goToStartingPoint
+		cp -r $@ $coursFolder/$name  2> error
+		rm error
+	elif [ "$1" == "add" ]; then
+		shift
+		#will get the $name for later
+		existsOrSelect $1
+		if [ $exists == 1 ]; then
+		      shift 
+		fi	
+		cp -r "$@" $coursFolder/$name
+		cd $coursFolder/$name
+	elif [ "$1" == "delete" ]; then
+		shift
+		if [ $# == 0 ]; then
+			goTosimpleCoursFolder
+			select simpleCours in *	
+			do
+				rm -r $coursFolder/$simpleCours
+				break;
+			done
+			goToStartingPoint
+		else
+			for simpleCours in "$@"
+			do
+				rm -r $coursFolder/$simpleCours
+			done
+		fi
+	elif [ "$1" == "push" ]; then
+		goTosimpleCoursFolder
+		#mettre à jour calcurse
+		cp -r ~/projet/calcurse/calcurse/todo ~/projet/calcurse/calcurse/apts ~/projet/calcurse/calcurse/notes ~/projet/calcurse/data
+		#code pour Github
+		git add .
+		git commit -m "update"
+		git push origin master
+	elif [ "$1" == "pull" ]; then
+		goTosimpleCoursFolder
+		git pull origin master
+	elif [ "$1" == "archive" ]; then
+		pos=$(pwd)
+		cd $coursFolder
+		select project in *
+		do
+			mv $coursFolder/$project ~/Documents/archive/
+		done
+		cd $pos
+	elif [ "$1" == "Makefile" ]; then
+		rm Makefile
+		createFiles $2
+	elif [ "$1" == "-h" ]; then
+		echo "
+		create => create a new cours directory
+	       	add => add a document to a cours directory
+		delete => delete a cours directory
+		push => save data from cours
+		pull => update data from cours
+		archive => archive selected cours
+		"
+	elif [ "$1" == "horaires" ]; then
+		zathura ~/Documents/universite/BSIII_horaires_A2020_V2.pdf &
+	elif [ "$1" == "summary" ]; then
+		task +cours
+	else
+		lf ~/cours
+	fi
+}
+
+executer $@

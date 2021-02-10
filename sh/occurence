@@ -1,0 +1,22 @@
+#!/bin/bash
+# cat /tmp/count_words.sh
+#!/bin/bash
+#Desc: Find out frequency of words in a file
+
+if [ $# -ne 1 ];
+then
+  echo "Usage: $0 filename";
+  exit -1
+fi
+
+extentionLess=$(python3 -c "print('$1'.split('.')[0])")
+pdftotext $1
+filename="$extentionLess.txt"
+
+egrep -o "\b[[:alpha:]]+\b" $filename | \
+
+awk '{ count[$0]++ }
+END {printf("%-14s%s\n","Word","Count") ;
+for(ind in count)
+{ printf("%-14s%d\n",ind,count[ind]); }
+}'

@@ -1,0 +1,15 @@
+#!/bin/bash
+#cherche le dossier parent (normalement à la 4e position)
+path=$(pwd)
+parent=$(python3 -c "print('/'.join('$path'.split('/')[0:5]))")
+
+echo $parent
+
+if [ "$1" == "new" ]; then
+	#on enlève la dernière ligne
+	#on la remplace par une ligne personnelle	
+	echo "actu: FORCE
+	bash ~/sh/session.sh $(pwd)" >> $parent/Makefile
+else
+	make $@ -C $parent
+fi

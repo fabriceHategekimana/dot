@@ -1,0 +1,15 @@
+#!/bin/bash
+
+while [ "$#" != "0" ]; 
+do
+	echo ""
+	echo "* résultats pour $1: "
+	for file in *
+	do
+		res=$(cat $file | grep -i $1)
+		if [ -n "$res"  ]; then
+			echo "$file"	
+		fi
+	done
+	shift
+done

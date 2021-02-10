@@ -1,0 +1,28 @@
+#!/bin/bash
+if [ "$1" = "-r" ]; then
+	echo "wipe temp"
+	rm -r ~/temp/*
+elif [ "$1" = "-m" ]; then
+	shift
+	echo "move $@ to temp"
+	for file in "$@"
+	do
+		mv $file ~/temp
+	done
+elif [ "$1" = "-a" ]; then
+	shift
+	echo "move $@ to temp"
+	for file in "$@"
+	do
+		cp $file ~/temp
+	done
+elif [ -z "$1" ]; then
+	cd ~/temp
+else
+	echo "copy $1 to temp"
+	cp $1 ~/temp
+	echo "
+	r	(remove) wipe the content of temp
+	m	(move) move the file(s) to temp
+	"
+fi

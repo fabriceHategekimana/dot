@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+
+cd ~/Documents/organisation/activité
+
+#coupe la fenêtre en deux pour mettre une fenètre dédiée aux passages de la Bible en bas
+tmux split-window -v -t 0
+
+#on ouvre le logiciel pour la Bible
+tmux send-keys -t 1 "clear" Enter
+tmux send-keys -t 1 "less Bible.pdf" Enter
+
+#on ouvre le logiciel décriture
+tmux send-keys -t 0 "vim -O theme avenir" Enter

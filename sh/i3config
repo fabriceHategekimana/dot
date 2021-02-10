@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ "$1" == "r" ]; then
+	rm ~/.config/i3/.config.*
+elif [ "$1" == "-h" ]; then
+	echo "
+	[empty] => open the i3 config fil
+	r	=> delete undesirable swap files
+	-h	=> show this help menu
+	"	
+else
+	vim ~/.config/i3/config
+fi

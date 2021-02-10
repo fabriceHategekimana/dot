@@ -1,0 +1,45 @@
+#!/bin/bash
+display(){ 
+	#coupe la fenêtre en 4 (les numéros changent à chaque coupure)
+	tmux split-window -v -t 0
+	tmux split-window -h -t 0
+	tmux split-window -h -t 2
+
+	#nettoyer toutes les fenêtres
+	tmux send-keys -t 0 "clear" Enter
+	tmux send-keys -t 1 "clear" Enter
+	tmux send-keys -t 2 "clear" Enter
+	tmux send-keys -t 3 "clear" Enter
+
+	#charge le tableau de bord
+	tmux send-keys -t 0 "task project: due:" Enter
+	tmux send-keys -t 1 "task summary" Enter
+	tmux send-keys -t 2 "task calendar" Enter
+	tmux send-keys -t 3 "sc-im ~/projet/task/Planning.csv" Enter
+
+	tmux select-pane -t 0
+}
+
+close(){ 
+	tmux send-keys -t 3 "exit" Enter
+	tmux send-keys -t 2 "exit" Enter
+	tmux send-keys -t 1 "exit" Enter
+	tmux send-keys -t 0 "clear" Enter
+}
+
+if [ "$1" == "c" ]; then
+	close
+elif [ "$1" == "r" ]; then
+	close
+	display
+elif [ "$1" == "-h" ]; then
+	echo"
+	[void] => open the panels
+	c => close the panels
+	r => reload the panels
+	-h => show this help menu
+	"
+else
+	display
+fi
+

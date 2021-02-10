@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+if [ -z "$1" ]; then
+	cd ~/rendu
+elif [ "$1" = "-r" ]; then
+	echo "wipe rendu"
+	rm -r ~/rendu/*
+elif [ "$1" = "-m" ]; then
+	echo "move $1 to rendu"
+	mv $2 ~/rendu
+elif [ "$1" = "-h" ]; then
+	echo"
+		without argument copy the file to rendu
+	-r: 	wipe the content of rendu
+	-m:	move the file to rendu
+	-j:	jump to rendu	
+	-h:	show this help
+	"
+else
+	echo "copy $@ to rendu"
+	cp -f "$@" ~/rendu
+fi

@@ -1,0 +1,3 @@
+#!/bin/bash
+#exécution du code assembleur
+arm-linux-gnueabi-gcc $1 && qemu-arm -L /usr/arm-linux-gnueabi a.out

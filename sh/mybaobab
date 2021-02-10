@@ -1,0 +1,18 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+	ssh hategef8@baobab2.hpc.unige.ch
+elif [ "$1" == "import" ]; then
+	scp -r hategef8@baobab2.hpc.unige.ch:$2 $2
+elif [ "$1" == "-h" ]; then
+	echo "
+[blank]		=> connexion simple 
+[default]	=> déplace le [fichier] depuis l'ordi jusqu'à baobab	
+import		=> déplace le [fichier] depuis baobab jusqu'à l'ordi
+	"
+else
+	#dans l'autre sens il faut juste inverser le "$1" et le "hatege"
+	scp -r "$1" hategef8@baobab2.hpc.unige.ch:
+	ssh hategef8@baobab2.hpc.unige.ch
+fi
+
+#sshfs permet de créer comme un dossier dropbox

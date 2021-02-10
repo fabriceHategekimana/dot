@@ -1,0 +1,32 @@
+#!/bin/bash
+
+
+if [ "$1" == "-i" ]; then #pour importer un fichier spécifique
+	sansExtention=$(python3 -c "print(\"$2\"[:\"$2\".index(\".\")])")
+	mysql -u user -pd367*WGa! -e "use app; drop table $sansExtention";
+
+	echo "" > ~/python/final.txt
+	python3 ~/python/import.py $2;
+	mysql -u user -pd367*WGa! -e "$(cat ~/python/final.txt)";
+
+elif [ "$1" == "-e" ]; then #pour executer une commande
+	mysql -u user -pd367*WGa! -e "use app; $2";
+elif [ "$1" == "-s" ]; then #pour executer un script sql
+	mysql -u user -pd367*WGa! -e "$(cat $2)";
+elif [ "$1" == "show" ]; then #pour afficher les tables présentes
+	if [ "$2" == "" ]; then
+		mysql -u user -pd367*WGa! -e "use app; show tables";
+	else
+		mysql -u user -pd367*WGa! -e "use app; select * from $2;";
+	fi
+elif [ "$1" == "-h" ]; then #pour afficher le menu d'aide
+	echo "
+	blank => execute a script
+	-i    => import a csv file in the database
+	-e    => execute a commande from the bash shell
+	-s    => execute a commande from the bash shell
+	-h    => show the help menu"
+else
+	mysql -u user -pd367*WGa! -e "use app; set names utf8; $(cat $1)";
+fi
+

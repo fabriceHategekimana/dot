@@ -1,0 +1,46 @@
+#!/bin/bash
+#si on a ajouter le paramêtre "-d" alors on crée un dossier sinon, on crée sur place
+if [ "$1" == "-d" ]; then
+	NOM=$2
+	mkdir $NOM
+	cd $NOM
+else
+	NOM=$1
+fi
+
+#ici on entre dans le dossier, on crée un fichier et on le remplit
+touch $NOM.html
+echo "
+
+<html>
+	<head>
+	</head>
+
+	<body>
+	</body>	
+
+	<link rel="stylsheet" type="text/css" href="css/style.css">
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/script.js"></script>
+<html>
+
+" > $NOM.html
+
+#On copie le fichier de configuration pour jquery
+mkdir js
+cp ~/jquery/jquery-3.4.1.min.js js
+
+#On crée notre propre fichier js
+touch js/script.js
+echo "
+
+	//script pour le site
+	\$(function() {
+});
+
+"  >> js/script.js
+
+#On crée notre propre fichier css
+mkdir css
+touch css/style.css
+ 

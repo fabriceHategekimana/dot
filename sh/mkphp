@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+	echo "wrong usage.
+	you must set a name to your file."
+else
+	touch $1.php
+	echo "
+<?php
+
+?>
+	" >> $1.php
+fi

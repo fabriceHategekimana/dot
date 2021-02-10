@@ -1,0 +1,45 @@
+#!/bin/bash
+
+depart=$(pwd)
+
+if [ "$1" == "-r" ]; then #pour effacer tout les fichier de actuel
+	rm ~/actuel/*
+elif [ "$1" == "-e" ]; then #pour faire un fichier devoir directement téléchargeable sur le drive 
+	zip -r devoir ~/actuel/*
+	save devoir.zip
+elif [ "$1" == "-j" ]; then #pour aller dans le dossier actuel
+	P0=P && P=$(pwd) && cd ~/actuel
+elif [ "$1" == "-u" ]; then #pour aller dans le dossier actuel
+	mv ~/Téléchargements/*.pdf ~/actuel
+elif [ "$1" == "-a" ]; then #pour créer un fichier de résumé
+	P0=P && P=$(pwd) && cd ~/actuel
+	IFS="," #Il ne faut pas enlever cette ligne, c'est ce qui permet de couper le ls en tableau
+	contenu=($(ls -m))
+	pdftotext ${contenu[1]:1}
+	for i in ${contenu[@]}; do
+		pdftotext ${i:1} 2>>err.txt
+		done
+		rm err.txt
+		cat *.txt >> resume.txt
+		rendu resume.txt
+		rm *.txt
+elif [ "$1" == "-h" ]; then 
+	echo"
+	blank => show all the pdf file in the 'actuel' directory
+	-r => remove all file frome the 'actuel' directory
+	-e => export a 'devoir.zip' file in my drive directory
+	-j => jump to the 'actuel' directory
+	-u => update (add in) the pdf file in 'actuel' directory with the pdf file of the Téléchargement directory
+	-a => create a resume file to export
+	-h => show the help menu	
+	"
+else
+	. ~/sh/cdd.sh ~/actuel
+	select actuel in *
+	do
+		. ~/sh/cdd.sh $actuel
+		break;
+	done
+fi
+
+

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#code pour GDrive
+#depart=$(pwd)
+#cd ~/GDrive
+#drive push
+. ~/sh/myssh github
+
+#mettre à jour calcurse
+cp -r ~/projet/calcurse/calcurse/todo ~/projet/calcurse/calcurse/apts ~/projet/calcurse/calcurse/notes ~/projet/calcurse/data
+
+#maj projet
+cd ~/projet
+git add .
+git commit -m "update"
+git push
+
+#maj cours
+. ~/sh/cours.sh push
+
+#enregistre le dot file
+cd ~/dot
+git add .
+git commit -m "update"
+git push
+

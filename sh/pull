@@ -1,0 +1,13 @@
+#!/bin/bash
+#depart=$(pwd)
+#cd ~/GDrive
+#drive pull
+. ~/sh/myssh github
+
+cd ~/projet
+git pull
+
+. ~/sh/cours.sh pull
+
+cd ~/dot
+git pull

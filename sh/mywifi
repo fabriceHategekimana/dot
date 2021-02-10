@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ "$1" == "d" ]; then
+	nmcli d 
+elif [ "$1" == "c" ]; then
+	nmcli c
+elif [ "$1" == "on" ]; then
+	nmcli r wifi on
+elif [ "$1" == "off" ]; then
+	nmcli r wifi off
+elif [ "$1" == "list" ]; then
+	nmcli d wifi list
+elif [ "$1" == "connect" ]; then
+	nmcli d wifi connect $2 $3
+elif [ "$1" == "reset" ]; then
+	nmcli r wifi off
+	nmcli r wifi on
+elif [ "$1" == "try" ]; then
+	nmcli d wifi connect Sunrise_5GHz_BF34CA
+elif [ "$1" == "-h" ]; then
+	echo "
+d	=> show wifi directory
+c	=> show current availiable wifi ports
+on	=> activate wifi
+off	=> disactivate wifi
+conect	=> connect to the [ wifiname ] with the [ password ]
+reset	=> relaunch the connection
+-h	=> show this help menu
+	"
+fi
+
+

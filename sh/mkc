@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ "$1" == "--header" ]; then
+	NOM=$2
+	EXT=.h
+else
+	NOM=$1
+	EXT=.c
+fi
+
+touch $NOM$EXT
+echo '
+#include<stdlib.h>
+#include<stdio.h>
+#include<unistd.h>
+
+int main(int argc, char *argv[]){
+	printf("Jésus Christ est Seigneur!");
+	return 0;
+}
+
+' >> $NOM$EXT
+
+

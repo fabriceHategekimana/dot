@@ -1,0 +1,17 @@
+#!/bin/bash
+
+NOM=$1
+touch $NOM.s
+echo '
+	.data
+num:	.asciz	" %u "
+hex:	.asciz	" %x "
+	.text
+	.globl main
+main:	stmfd	sp!,{lr}
+
+	ldmfd	sp!,{lr}
+	mov	pc,lr
+' >> $NOM.s
+
+

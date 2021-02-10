@@ -1,0 +1,25 @@
+#!/bin/bash
+#si on a ajouter le paramêtre "-d" alors on crée un dossier sinon, on crée sur place
+if [ "$1" == "-d" ]; then
+	NOM=$2
+	mkdir $NOM
+	cd $NOM
+else
+	NOM=$1
+fi
+
+if [ "$1" == "-r" ]; then
+	name=$2
+	#remplacer le fichier créé par un fichier vide du même nom
+	rm main.swift
+	#Aller dans notre code principal
+	touch  main.swift
+	echo "on a trouvé un -r"
+else
+	echo "on a pas trouvé de -r"
+
+fi
+
+if [ "$1"  != "-d" ]; then
+	swift build	
+fi

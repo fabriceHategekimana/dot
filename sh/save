@@ -1,0 +1,24 @@
+#!/bin/bash
+depart=$(pwd)
+if [ "$1" == "-c" ]; then #pour effacer tout les fichier de actuel
+	cp -ri $2 $CLEE
+elif [ "$1" == "-u" ]; then 
+	echo "updating data"
+	cd ~/GDrive
+	drive pull
+	cd $depart	
+elif [ "$1" == "-h" ]; then 
+	echo"
+	blank => copy the data to drive
+	-c => copy the data to my usb key (fabrice)
+	-h => show the help menu	
+	-u => update data from drive
+	"
+else
+	cp -rf $1 ~/GDrive/Transfert
+	cd ~/GDrive
+	drive push
+	echo "Le fichier est bien arrivé à destination"
+	ls ~/GDrive/Transfert
+	cd $depart	
+fi
