@@ -16,6 +16,9 @@
 exec polybar example
 exec picom --experimental-backends
 exec albert
+exec xrandr --output HDMI-1 --left-of LVDS-1
+
+#bindsym $mod+m move workspace to output left
 
 #fond d'écran
 exec feh --bg-scale ~/Images/background/fond_d_ecran/abstrait01.jpg
@@ -30,9 +33,6 @@ exec firefox
 exec --no-startup-id rm -r ~/temp/* ~/rendu/* ~/Téléchargements/* ~/corbeille/*
 exec bash ~/sh/pull
 exec bash albert
-
-# read 1 character and mark the current window with this character
-bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
 
 # read 1 character and go to the window with the character
 bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: ""]
@@ -163,6 +163,9 @@ bindsym $mod+ctrl+l move right
 #custom movements
 bindsym $mod+shift+h move left ; layout toggle split ; move left
 bindsym $mod+shift+l move right ; layout toggle split ; move right
+bindsym $mod+shift+j move workspace to output left;
+bindsym $mod+shift+k move workspace to output right;
+
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
@@ -184,9 +187,6 @@ bindsym F11 fullscreen toggle
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -290,7 +290,8 @@ mode "config" {
 	
 }
 
-bindsym $mod+XF86WakeUp mode "config"
+bindsym $mod+c mode "config"
+bindsym $mod+space mode "config"
 
 #--------------------------------------------------------------------------------
 #color couleur
@@ -329,8 +330,8 @@ for_window [class="Galculator"] floating enable
 
 
 for_window [class="^.*"] border pixel 3
-gaps inner 8
-gaps outer 10
+gaps inner 5
+gaps outer 8
 
 
 #Taille de fenêtre
