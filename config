@@ -88,6 +88,8 @@ bindsym $sup+1 exec feh --fullscreen --auto-zoom ~/Images/cheat_sheet/tmux.png
 bindsym $sup+2 exec feh --fullscreen --auto-zoom ~/Images/cheat_sheet/intellij.jpeg
 #vim cheat sheet
 bindsym $sup+3 exec feh --fullscreen --auto-zoom ~/Images/cheat_sheet/vim.jpeg
+#horaire 2e semestre de 3e année
+bindsym $sup+0 exec feh --fullscreen --auto-zoom ~/Images/capturés/Horaire_2_semestre.png
 
 #Mode normal
 bindsym $sup+5 exec i3-msg [tiling] kill ; split v ; exec gnome-terminal -- tty-clock ;  exec gnome-terminal -- bash ~/sh/mytask task ; exec firefox https://moodle.unige.ch/?redirect=0 ; exec firefox https://web.whatsapp.com/ ; exec gnome-terminal 

@@ -707,11 +707,12 @@ endfunction
 
 function! Programme()
 	let g:extention="programme"
-	nnoremap <buffer> <F5> :call RunARM()<CR>
+	command! -nargs=* Theme vimgrep /<args>/ ../txt/*.txt
 	call Markdown()
 	nnoremap <buffer> éé :!gedit %<CR>
 	nnoremap <buffer> éy :!chromium https://www.youtube.com/&<CR>
 	nnoremap <buffer> éc :call Chant()<CR>
+	nnoremap <buffer> ét :call Chant()<CR>
 endfunction
 
 function! CI()
