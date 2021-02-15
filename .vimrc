@@ -410,6 +410,7 @@ function! Python()
 	nnoremap <buffer> <silent> <F4> :vert terminal python3 -i %<CR>
 	nnoremap <buffer> <silent> <F5> :call RunPython3("normal")<CR>
 	xnoremap <buffer> <silent> <F5> y:call RunPython3("part")<CR>
+	"Debug python"
 	nnoremap <buffer> <F6> :terminal python3 -m pdb %<CR>
 	command  -nargs=1 Doc :!python3 -m pydoc <args>
 
