@@ -103,6 +103,8 @@ cmd open ${{
 		eog $f &
 	elif [ "$ext" == "webp" ]; then
 		firefox $f &
+	elif [ "$ext" == "mp3" ]; then
+		totem $f &
 	else
 		vim $f
 	fi
