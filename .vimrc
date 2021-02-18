@@ -412,7 +412,7 @@ function! Python()
 	xnoremap <buffer> <silent> <F5> y:call RunPython3("part")<CR>
 	"Debug python"
 	nnoremap <buffer> <F6> :terminal python3 -m pdb %<CR>
-	command  -nargs=1 Doc :!python3 -m pydoc <args>
+	command!  -nargs=1 Doc :!python3 -m pydoc <args>
 
 	"numpy shortcuts
 	inoremap <buffer> npa np.array([])<Left><Left>
