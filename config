@@ -133,6 +133,8 @@ bindsym $sup+d exec gnome-terminal -- vim "+:VimwikiMakeDiaryNote"
 bindsym $sup+v exec gnome-terminal -- vim 
 #activite
 bindsym $sup+a exec sakura -e vim ~/projet/activite/start.md
+#lmms
+bindsym $sup+shift+l exec lmms
 
 #gui for task
 #define the timer (pkill -x bash to stop this process)
@@ -259,9 +261,26 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 bindsym $mod+i mode "intellij"
+bindsym $mod+m mode "music"
 
 mode "intellij" {
         bindsym Escape mode "default"
+}
+
+mode "music" {
+        bindsym Escape mode "default"
+bindsym $mod+1 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Bell.mmpz
+bindsym $mod+2 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Dist_jazz_guitare.mmpz
+bindsym $mod+3 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Ensemble.mmpz
+bindsym $mod+4 exec pkill -x lmms || lmms ~/lmms/projects/Sound/EP_muted.mmpz
+bindsym $mod+5 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Falling_start.mmpz
+bindsym $mod+6 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Flute.mmpz
+bindsym $mod+7 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Jarre_string.mmpz
+bindsym $mod+8 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Ooo.mmpz
+bindsym $mod+9 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Soft_choir.mmpz
+bindsym $mod+0 exec pkill -x lmms || lmms ~/lmms/projects/Sound/String_Pad_5.mmpz
+bindsym $mod+w exec pkill -x lmms || lmms ~/lmms/projects/Sound/Wichita_whoop.mmpz
+bindsym $mod+q exec pkill -x lmms || lmms ~/lmms/projects/Sound/Wind_whistle.mmpz
 }
 
 mode "config" {
@@ -292,7 +311,7 @@ mode "config" {
 	
 }
 
-bindsym $mod+c mode "config"
+
 bindsym $mod+space mode "config"
 
 #--------------------------------------------------------------------------------
