@@ -281,6 +281,7 @@ bindsym $mod+9 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Soft_choir.mmpz
 bindsym $mod+0 exec pkill -x lmms || lmms ~/lmms/projects/Sound/String_Pad_5.mmpz
 bindsym $mod+w exec pkill -x lmms || lmms ~/lmms/projects/Sound/Wichita_whoop.mmpz
 bindsym $mod+q exec pkill -x lmms || lmms ~/lmms/projects/Sound/Wind_whistle.mmpz
+bindsym $mod+f exec pkill -x lmms || lmms ~/lmms/projects/Sound/French_horn.mmpz
 }
 
 mode "config" {
