@@ -269,8 +269,10 @@ mode "intellij" {
 
 mode "music" {
         bindsym Escape mode "default"
+	#gestion du volume
         bindsym Up exec bash -i volume plus
         bindsym Down exec bash -i volume moins
+#numéro
 bindsym $mod+1 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Bell.mmpz
 bindsym $mod+2 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Dist_jazz_guitare.mmpz
 bindsym $mod+3 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Ensemble.mmpz
@@ -281,9 +283,13 @@ bindsym $mod+7 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Jarre_string.mmp
 bindsym $mod+8 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Ooo.mmpz
 bindsym $mod+9 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Soft_choir.mmpz
 bindsym $mod+0 exec pkill -x lmms || lmms ~/lmms/projects/Sound/String_Pad_5.mmpz
-bindsym $mod+w exec pkill -x lmms || lmms ~/lmms/projects/Sound/Wichita_whoop.mmpz
-bindsym $mod+q exec pkill -x lmms || lmms ~/lmms/projects/Sound/Wind_whistle.mmpz
-bindsym $mod+f exec pkill -x lmms || lmms ~/lmms/projects/Sound/French_horn.mmpz
+    #lettre
+    bindsym $mod+w exec pkill -x lmms || lmms ~/lmms/projects/Sound/Wichita_whoop.mmpz
+    bindsym $mod+q exec pkill -x lmms || lmms ~/lmms/projects/Sound/Wind_whistle.mmpz
+    bindsym $mod+f exec pkill -x lmms || lmms ~/lmms/projects/Sound/French_horn.mmpz
+
+#preset
+    bindsym 1 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Preset_01.mmpz
 }
 
 mode "config" {

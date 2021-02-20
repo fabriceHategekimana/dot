@@ -1,13 +1,13 @@
 #!/bin/bash
 if [ "$1" == "plus" ]; then
 	infos=$(pacmd list-sinks | grep "volume: front-left")
-	res=$(python3 -c "print(int('$infos'.split('/')[0].split(':')[2])+10000)")
+	res=$(python3 -c "print(int('$infos'.split('/')[0].split(':')[2])+5000)")
 	echo $res
 	pacmd set-sink-volume 0 $res
 	pacmd set-sink-volume 1 $res
 elif [ "$1" == "moins" ]; then
 	infos=$(pacmd list-sinks | grep "volume: front-left")
-	res=$(python3 -c "print(int('$infos'.split('/')[0].split(':')[2])-10000)")
+	res=$(python3 -c "print(int('$infos'.split('/')[0].split(':')[2])-5000)")
 	echo $res
 	pacmd set-sink-volume 0 $res
 	pacmd set-sink-volume 1 $res
