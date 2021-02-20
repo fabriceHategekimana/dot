@@ -269,6 +269,8 @@ mode "intellij" {
 
 mode "music" {
         bindsym Escape mode "default"
+        bindsym Up exec bash -i volume plus
+        bindsym Down exec bash -i volume moins
 bindsym $mod+1 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Bell.mmpz
 bindsym $mod+2 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Dist_jazz_guitare.mmpz
 bindsym $mod+3 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Ensemble.mmpz
