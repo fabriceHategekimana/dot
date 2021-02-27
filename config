@@ -290,6 +290,7 @@ bindsym $mod+0 exec pkill -x lmms || lmms ~/lmms/projects/Sound/String_Pad_5.mmp
 
 #preset
     bindsym 1 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Preset_01.mmpz
+    bindsym 2 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Preset_02.mmpz
 }
 
 mode "config" {
