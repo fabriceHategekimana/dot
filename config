@@ -361,8 +361,8 @@ for_window [class="Galculator"] floating enable
 
 
 for_window [class="^.*"] border pixel 3
-gaps inner 20
-gaps outer 30
+gaps inner 10
+gaps outer 15
 
 
 #Taille de fenêtre
