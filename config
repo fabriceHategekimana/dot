@@ -272,6 +272,8 @@ mode "music" {
 	#gestion du volume
         bindsym Up exec bash -i volume plus
         bindsym Down exec bash -i volume moins
+        bindsym Left exec bash -i sendKey lmms minus
+        bindsym Right exec bash -i sendKey lmms plus
 #numéro
 bindsym $mod+1 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Bell.mmpz
 bindsym $mod+2 exec pkill -x lmms || lmms ~/lmms/projects/Sound/Dist_jazz_guitare.mmpz
