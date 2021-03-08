@@ -63,6 +63,8 @@ set splitright
 set ignorecase
 set smartcase
 set incsearch "pour que vimwiki n'ait pas trop de problème
+set tabstop=4
+set softtabstop=4
 set cindent shiftwidth=4
 set number
 set matchpairs+=<:>
