@@ -443,7 +443,7 @@ function! OctaveLike()
 endfunction
 
 
-"----------------------------------latex--------------------------------
+"----------------------------------LATEX--------------------------------
 
 function! Latex()
 	set spell
@@ -457,7 +457,8 @@ function! Latex()
 	nnoremap <buffer> éc i\textsf{}<Esc>i
 	nnoremap <buffer> éii o\includegraphics[scale=1.2]{image}
 	inoremap <CR> \\<CR> 
-	nnoremap <buffer> <F5> :execute ":!pdflatex ".bufname("%")." && zathura ".expand('%:r').".pdf" <CR>
+	nnoremap <buffer> <F5> :execute ":!pdflatex ".bufname("%")<CR>
+	nnoremap <buffer> <F6> :execute ":!pdflatex ".bufname("%")." && zathura ".expand('%:r').".pdf &" <CR>
 endfunction
 
 "------------------------------------BASH-------------------------------------
